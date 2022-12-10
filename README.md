@@ -7,7 +7,6 @@
 박기쁜 참여
 이슬기 참여
 
-
 ##DB / JPA
 1. 기능 -  회원가입, 로그인, 트리공유, 트리메세지
 
@@ -41,3 +40,5 @@ Long ornamentColor; // 장식 색상
 Long ornamentpattern; // 장식 패턴
 Long boxColor;   // 박스색상
 Long ribbonColor;  // 박스무늬
+
+권혁주 참여
