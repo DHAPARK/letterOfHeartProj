@@ -10,17 +10,17 @@
 ##DB / JPA
 1. 기능 -  회원가입, 로그인, 트리공유, 트리메세지
 
-[User]
-String nickname; - not null, UK // 닉네임
-String userid;   - not null, PK // 아이디
-String userpw;   - not null     // 비밀번호
-
-[tree]  // 트리는 회원가입 한사람만 가짐 / 매년 트리를 만들 수 있는지? 
-Long treeNum; PK  // 트리번호
-String userid(fK) // 아이디
-Long messageCnt; // 메세지 개수
-LocalDateTime createDate; // 생성일자
-
+[User]</br>
+String nickname; - not null, UK // 닉네임</br>
+String userid;   - not null, PK // 아이디</br>
+String userpw;   - not null     // 비밀번호</br>
+</br>
+[tree]  // 트리는 회원가입 한사람만 가짐 / 매년 트리를 만들 수 있는지? </br>
+Long treeNum; PK  // 트리번호</br>
+String userid(fK) // 아이디</br>
+Long messageCnt; // 메세지 개수</br>
+LocalDateTime createDate; // 생성일자</br>
+</br>
 
 [message] 
 Long num; - 메세지번호(시퀀스) - PK
