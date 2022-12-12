@@ -1,0 +1,19 @@
+package com.project.tree.domain;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter @Setter
+public class User {
+
+	@Id
+	private Long id;			
+	
+	private String uId;			// 유저 아이디
+	private String password;	// 유저 비밀번호
+	private String nickname;	// 유저 닉네임
+}

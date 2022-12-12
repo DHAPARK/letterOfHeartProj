@@ -1,0 +1,37 @@
+package com.project.tree.domain;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter @Setter
+public class Message {
+
+    @Id @GeneratedValue
+    @Column(name = "MESSAGE_ID")
+    private Long id;
+    
+//    @Column(name = "TREE_ID")
+//    private Long treeId;            // 트리 번호
+    
+    private String u_Id;                // 수신인 아이디
+    private String titleNickname;    // 작성자 닉네임
+    private String content;            // 내용
+    private LocalDateTime sendDate;    // 작성 일자
+    private LocalDateTime openDate;    // 확인 가능 일자
+    private Long status;            // 0 - 미확인, 1 - 확인
+    
+	@ManyToOne
+	@JoinColumn(name = "TREE_ID")
+	private Tree tree;
+	
+}
