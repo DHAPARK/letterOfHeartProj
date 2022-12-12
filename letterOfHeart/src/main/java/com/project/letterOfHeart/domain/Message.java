@@ -36,7 +36,7 @@ public class Message {
 //    @Column(name = "TREE_ID")
 //    private Long treeId;            	// 트리 번호
     
-    private String u_Id;                // 수신인 아이디
+//    private String u_Id;                // 수신인 아이디
     
     @Column(length = 8)
     private String titleNickname;    	// 작성자 닉네임
@@ -46,7 +46,9 @@ public class Message {
     private LocalDateTime sendDate;     // 작성 일자
     private LocalDateTime openDate;     // 확인 가능 일자
     private Long status;            	// 0 - 미확인, 1 - 확인
-    
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private Users users;
 	@ManyToOne
 	@JoinColumn(name = "TREE_ID")
 	private Tree tree;
