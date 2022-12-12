@@ -6,9 +6,9 @@
 최현석 참여
 박기쁜 참여
 이슬기 참여
+권혁주 참여
 
-##DB / JPA
-1. 기능 -  회원가입, 로그인, 트리공유, 트리메세지
+
 
 
 ![image](https://user-images.githubusercontent.com/116873132/206985213-3fae0052-d8fa-4a65-bc5e-2bbd3f6603bf.png)
@@ -21,3 +21,6 @@
   아이디 : newyear <br>
   비밀번호 : newyear  <br>
 - 양방향 매핑까지 완료
+
+front 12 / 12 : index.html , design.html 틀 잡음. 
+
