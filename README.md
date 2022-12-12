@@ -7,3 +7,6 @@
 박기쁜 참여
 이슬기 참여
 권혁주 참여
+
+
+front 12 / 12 : index.html , design.html 틀 잡음. 
