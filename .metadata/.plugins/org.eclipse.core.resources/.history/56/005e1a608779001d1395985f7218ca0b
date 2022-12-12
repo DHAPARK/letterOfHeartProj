@@ -1,0 +1,36 @@
+package com.project.tree.domain;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter @Setter
+@SequenceGenerator(
+		name = "USERS_SEQ_GENERATOR"
+	    , sequenceName = "USERS_SEQ"
+	    , initialValue = 1
+	    , allocationSize = 1
+	)
+public class Users {
+
+    @Id @GeneratedValue(
+    		strategy = GenerationType.SEQUENCE,
+    		generator = "USERS_SEQ_GENERATOR")
+	@Column(name = "USERS_ID")
+    private Long id;
+
+    private String u_Id;                // 유저 아이디
+    private String password;            // 유저 비밀번호
+    private String nickname;            // 유저 닉네임
+    private LocalDateTime createDate;   // 가입 일자
+    
+}

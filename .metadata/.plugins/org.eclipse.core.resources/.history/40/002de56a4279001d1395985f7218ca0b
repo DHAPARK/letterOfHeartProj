@@ -1,0 +1,21 @@
+package com.project.tree.domain;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter @Setter
+public class Deco {
+
+    @Id
+    private Long id;
+
+    private Long massageId ;     	// 메세지 번호
+    private Long ornamentType ;		// 트리 장식 종류
+    private Long decoOption1 ;      // 꾸미기1
+    private Long decoOption2 ;      // 꾸미기2
+
+}

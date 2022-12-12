@@ -1,0 +1,5 @@
+package com.project.tree.domain;
+
+public class User {
+
+}
