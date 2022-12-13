@@ -32,8 +32,6 @@
         transition: all 0.5s;
       }
 
-      
-
       .popup {
         position: absolute;
         top: 50%;
@@ -350,7 +348,7 @@
         /**
          * new Window에서 편지 쓰는 페이지 여는 함수
          * 
-         */
+        */
         function openWriteLetterPaper(){
             if(!Flag){
                 document.getElementById("writeLetterForm").style.display = 'block';
@@ -363,7 +361,6 @@
                 document.getElementById("popupDeco").style.display = "block";
                 Flag = false;
             }
-
         }
 
         document.querySelector("#show").addEventListener("click", show);
