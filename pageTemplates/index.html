@@ -223,10 +223,15 @@
         }
         #writeLetterForm{
             width: 90%;
-            height:65%;
+            height:0%;
             margin:0 auto;
             margin-top:10px;
-            display:none;
+            visibility:hidden;
+            transition: all 0.2s;
+        }
+        .act {
+            visibility: visible !important;
+            height: 65% !important;
         }
         .formInnerEle.textarea
         {
@@ -315,7 +320,6 @@
                                     <img src="https://cdn.dribbble.com/users/1410984/screenshots/3176480/media/1b6cc71a194ad348c816cae00bcedcaf.gif"/>
                                 </div>
                                 <!-- popupDeco 끝 -->
-
                             </div>
                             <!-- twoBtns 끝 -->
                             <button id="close">X</button>
@@ -350,13 +354,12 @@
          * 
         */
         function openWriteLetterPaper(){
+            document.getElementById("writeLetterForm").classList.toggle('act');
             if(!Flag){
-                document.getElementById("writeLetterForm").style.display = 'block';
                 document.getElementById("logoutBtn").style.display = "none";
                 document.getElementById("popupDeco").style.display = "none";
                 Flag = true;
             } else {
-                document.getElementById("writeLetterForm").style.display = 'none';
                 document.getElementById("logoutBtn").style.display = "block";
                 document.getElementById("popupDeco").style.display = "block";
                 Flag = false;
