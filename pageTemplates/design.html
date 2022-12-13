@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--내 트리 꾸미기 같은 페이지가 될것같은데-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,17 +20,95 @@
             height:100%;
             background-color: brown;
         }
-        #contents{
-            width:700px;
-            height:1000px;
-            border: 1px solid black;
-            margin: 0 auto;
+        @media( max-width:300px ){
+            #contents{
+                width:250px;
+                height:500px;
+                border: 1px solid black;
+                margin: 0 auto;
+            }
         }
+        @media( min-width:300px ) and ( max-width:500px ){
+            #contents{
+                width:300px;
+                height:550px;
+                border: 1px solid black;
+                margin: 0 auto;
+            }
+        }
+
+        @media( min-width:500px ){
+            #contents{
+                width:600px;
+                height:900px;
+                border: 1px solid black;
+                margin: 0 auto;
+            }
+        }
+
         #treeImg{
             width:100%;
-            height:70%;
+            height:60%;
             border: 1px solid white;
         }
+        #top{
+            width:30%;
+            height:25%;
+            border:1px solid white;
+            margin:0 auto;
+        }
+        #middle{
+            width:60%;
+            height:25%;
+            border:1px solid white;
+            margin:0 auto;
+            display:flex;
+        }
+        #bottom{
+            width:90%;
+            height:25%;
+            border:1px solid white;
+            margin:0 auto;
+            display:flex;
+        }
+        .letters{
+            
+        }
+        .top{
+            width: 90%;
+            height: 90%;
+            border: 5px solid black;
+            margin : 0 auto;
+        }
+        .middle{
+            width: 40%;
+            height: 90%;
+            border: 5px solid black;
+            margin : 0 auto;
+        }
+        .bottom{
+            width: 25%;
+            height: 90%;
+            border: 5px solid black;
+            margin : 0 auto;
+        }
+        #letterArea{
+            width: 100%;
+            height: 30%;
+            
+        }
+        #letterAreaInnerTextArea{
+            width:100%;
+            height:100%;
+        }
+        #modalBtn{
+            width:100%;
+            height:10%;
+            background-color:green;
+            border-radius:20px;
+            text-align:center;
+        }
+        
     </style>
 </head>
 <body>
@@ -39,10 +116,35 @@
         <div id="contents">
             <div id="treeImg">
                 
+                <div id="top">
+                    <div class="letters top"></div>
+                </div>
+                <div id="middle">
+                    <div class="letters middle"></div>
+                    <div class="letters middle"></div>
+                </div>
+                <div id="bottom">
+                    <div class="letters bottom"></div>
+                    <div class="letters bottom"></div>
+                    <div class="letters bottom"></div>
+                </div>
+                <!--top middle bottom 끝-->
             </div>
             <!--treeImg 끝-->
+
+            <div id="letterArea">
+                <textarea id="letterAreaInnerTextArea">
+
+                </textarea>
+            </div>
+            <!-- letterArea 끝 -->
+            <div id="modalBtn">
+                <img src="santa-claus.png"/>
+            </div>
+
         </div>
         <!--contents 끝-->
+        
     </div>
 </body>
 </html>
