@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
     <entry loc="C:\0803_gb_lsk\util\jdk-11.0.16_windows-x64_bin\jdk-11.0.16" stamp="1659501388186"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk/Contents/Home" stamp="1645442333482"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home" stamp="1657629193000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home" stamp="1618964067000"/>
 </dirs>
