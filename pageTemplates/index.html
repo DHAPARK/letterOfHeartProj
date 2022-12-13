@@ -215,7 +215,12 @@
         /*
             눈실험
         */
-        
+        #letterToIdArea{
+            width:50%;
+            height:20%;
+            border-radius:20px;
+        }
+
     </style>
 </head>
 <body>
@@ -270,8 +275,13 @@
                         <div class="popup">
                             <div id="twoBtns">
                                 <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button">편지쓰기</button>
-                                <button class="twoBtnsInnerBtn" id="logoutBtn" type="button">로그아웃</button>
+                                
+                                <form action="#" method="post" name="writeLetterForm">
+                                    <input id="letterToIdArea" type="text" name="id"/>
+                                    <textarea id="letterContentArea" name="letterContent"></textarea>
+                                </form>
 
+                                <button class="twoBtnsInnerBtn logOutBtnAndPopupDecoImg" id="logoutBtn" type="button">로그아웃</button>
                                 <div id="popupDeco">               
                                     <img src="https://cdn.dribbble.com/users/1410984/screenshots/3176480/media/1b6cc71a194ad348c816cae00bcedcaf.gif"/>
                                 </div>
@@ -309,7 +319,7 @@
          * 
          */
         function openWriteLetterPaper(){
-
+            
         }
 
         document.querySelector("#show").addEventListener("click", show);
