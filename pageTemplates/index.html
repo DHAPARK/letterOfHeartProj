@@ -220,7 +220,37 @@
             height:20%;
             border-radius:20px;
         }
-
+        .formInnerEle{
+            display:block;
+        }
+        #writeLetterForm{
+            width: 90%;
+            height:65%;
+            margin:0 auto;
+            margin-top:10px;
+            display:none;
+        }
+        .formInnerEle.textarea
+        {
+            width:100%;
+            height:100%;
+            margin-top:10px;
+        }
+        .formInnerEle.textarea #letterContentArea{
+            width:100%;
+            height:100%;
+        }
+        #sendLetterBtn{
+            width:100%;
+            background-color:green;
+            border-radius:20px;
+            color:white;
+        }
+        #close{
+            all: unset;
+            color:white;
+            font-size:30px;
+        }
     </style>
 </head>
 <body>
@@ -274,11 +304,12 @@
                     <div class="window">
                         <div class="popup">
                             <div id="twoBtns">
-                                <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button">편지쓰기</button>
+                                <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button" onclick="openWriteLetterPaper();">편지쓰기</button>
                                 
-                                <form action="#" method="post" name="writeLetterForm">
-                                    <input id="letterToIdArea" type="text" name="id"/>
-                                    <textarea id="letterContentArea" name="letterContent"></textarea>
+                                <form id="writeLetterForm" action="#" method="post" name="writeLetterForm">
+                                    <label class="formInnerEle">받는이 : <input id="letterToIdArea" type="text" name="id"/></label>
+                                    <label class="formInnerEle textarea"><textarea id="letterContentArea" name="letterContent"></textarea></label>
+                                    <label class="formInnerEle"><input id="sendLetterBtn" type="submit" value="전송"/></label>
                                 </form>
 
                                 <button class="twoBtnsInnerBtn logOutBtnAndPopupDecoImg" id="logoutBtn" type="button">로그아웃</button>
@@ -289,7 +320,7 @@
 
                             </div>
                             <!-- twoBtns 끝 -->
-                            <button id="close">팝업닫기</button>
+                            <button id="close">X</button>
                             <!--close 끝-->
                         </div>
                         <!--popup 끝-->
@@ -307,6 +338,8 @@
     </div>
 
     <script>
+        let Flag = false;
+
         function show() {
           document.querySelector(".background").className = "background show";
         }
@@ -319,7 +352,18 @@
          * 
          */
         function openWriteLetterPaper(){
-            
+            if(!Flag){
+                document.getElementById("writeLetterForm").style.display = 'block';
+                document.getElementById("logoutBtn").style.display = "none";
+                document.getElementById("popupDeco").style.display = "none";
+                Flag = true;
+            } else {
+                document.getElementById("writeLetterForm").style.display = 'none';
+                document.getElementById("logoutBtn").style.display = "block";
+                document.getElementById("popupDeco").style.display = "block";
+                Flag = false;
+            }
+
         }
 
         document.querySelector("#show").addEventListener("click", show);
