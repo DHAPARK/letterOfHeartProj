@@ -11,8 +11,8 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <style>
-/*실험*/
-.background {
+    /*실험*/
+    .background {
         position: fixed;
         top: 0;
         left: 0;
@@ -32,12 +32,7 @@
         transition: all 0.5s;
       }
 
-      .window {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        margin: 0 auto;
-      }
+      
 
       .popup {
         position: absolute;
@@ -78,12 +73,24 @@
                 border: 1px solid black;
                 margin: 0 auto;
             }
+            .window {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                margin: 0 auto;
+            }
         }
         @media( min-width:300px ) and ( max-width:500px ){
             #contents{
                 width:300px;
                 height:550px;
                 border: 1px solid black;
+                margin: 0 auto;
+            }
+            .window {
+                position: relative;
+                width: 100%;
+                height: 100%;
                 margin: 0 auto;
             }
         }
@@ -93,6 +100,12 @@
                 width:600px;
                 height:900px;
                 border: 1px solid black;
+                margin: 0 auto;
+            }
+            .window {
+                position: relative;
+                width: 50%;
+                height: 100%;
                 margin: 0 auto;
             }
         }
@@ -234,8 +247,8 @@
                     <div class="window">
                         <div class="popup">
                             <div id="twoBtns">
-                                <button class="twoBtnsInnerBtn" type="button">편지쓰기</button>
-                                <button class="twoBtnsInnerBtn" type="button">로그아웃</button>
+                                <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button">편지쓰기</button>
+                                <button class="twoBtnsInnerBtn" id="logoutBtn" type="button">로그아웃</button>
 
                                 <div id="popupDeco">               
                                     <img src="https://cdn.dribbble.com/users/1410984/screenshots/3176480/media/1b6cc71a194ad348c816cae00bcedcaf.gif"/>
@@ -268,6 +281,13 @@
   
         function close() {
           document.querySelector(".background").className = "background";
+        }
+        /**
+         * new Window에서 편지 쓰는 페이지 여는 함수
+         * 
+         */
+        function openWriteLetterPaper(){
+
         }
 
         document.querySelector("#show").addEventListener("click", show);
