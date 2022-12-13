@@ -355,13 +355,23 @@
         */
         function openWriteLetterPaper(){
             document.getElementById("writeLetterForm").classList.toggle('act');
+            const logoutBtn = document.getElementById("logoutBtn");
+            const popupDeco = document.getElementById("popupDeco");
+            const formEleArr = document.getElementsByClassName("formInnerEle");
+
             if(!Flag){
-                document.getElementById("logoutBtn").style.display = "none";
-                document.getElementById("popupDeco").style.display = "none";
+                Array.from(formEleArr).forEach(item=>{
+                    item.style.opacity = 1;
+                })
+                logoutBtn.style.display = "none";
+                popupDeco.style.display = "none";
                 Flag = true;
             } else {
-                document.getElementById("logoutBtn").style.display = "block";
-                document.getElementById("popupDeco").style.display = "block";
+                Array.from(formEleArr).forEach(item=>{
+                    item.style.opacity = 0;
+                })
+                logoutBtn.style.display = "block";
+                popupDeco.style.display = "block";
                 Flag = false;
             }
         }
