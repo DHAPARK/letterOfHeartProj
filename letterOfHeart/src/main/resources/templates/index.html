@@ -11,6 +11,9 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <style>
+        button{
+            all: unset;
+        }
     /*실험*/
     .background {
         position: fixed;
@@ -20,38 +23,10 @@
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.3);
         z-index: 1000;
-
         /* 숨기기 */
         z-index: -1;
         opacity: 0;
-      }
-
-      .show {
-        opacity: 1;
-        z-index: 1000;
-        transition: all 0.5s;
-      }
-
-      .popup {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #ffffff;
-        box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-
-        /* 임시 지정 */
-        width: 100px;
-        height: 100px;
-
-        /* 초기에 약간 아래에 배치 */
-        transform: translate(-50%, -40%);
-      }
-
-      .show .popup {
-        transform: translate(-50%, -50%);
-        transition: all 0.5s;
-      }
+      }      
 /*실험*/
 
         html, body{
@@ -111,148 +86,93 @@
         #treeImg{
             width:100%;
             height:90%;
-            border: 1px solid white;
+            /*border: 1px solid white;*/
             background-image: url("tree1.png");
             background-repeat: no-repeat;
             background-size: contain;
             background-position : center;
         }
-        #top{
-            width:30%;
+        #logoDiv{
+            width:77%;
             height:25%;
-            border:1px solid white;
+            background-color:white;
             margin:0 auto;
-            margin-top:30%;
         }
-        #middle{
-            width:60%;
-            height:25%;
-            border:1px solid white;
-            margin:0 auto;
-            display:flex;
-        }
-        #bottom{
-            width:90%;
-            height:25%;
-            border:1px solid white;
-            margin:0 auto;
-            display:flex;
-        }
-        .letters{
-            
-        }
-        .top{
-            width: 90%;
-            height: 90%;
-            border: 5px solid black;
-            margin : 0 auto;
-        }
-        .middle{
-            width: 40%;
-            height: 90%;
-            border: 5px solid black;
-            margin : 0 auto;
-        }
-        .bottom{
-            width: 25%;
-            height: 90%;
-            border: 5px solid black;
-            margin : 0 auto;
-        }
-        /*
-        #letterArea{
-            width: 100%;
-            height: 30%;
-            
-        }
-        */
-        #letterAreaInnerTextArea{
-            width:100%;
-            height:100%;
-        }
-        #modalBtnDiv{
-            width:100%;
-            height:10%;
-            border-radius:20px;
-            text-align:center;
-        }
-        #show{
-            width:100%;
-            background-color:green;
-            border-radius: 20px;
-        }
-        .popup{
-            width:100%;
-            height:70%;
-        }
-        #twoBtns{
-            width:100%;
-            height:100%;
-            border:5px dotted green;
-        }
-        .twoBtnsInnerBtn{
-            display:block;
-            width:100%;
-            height:20%;
-            background-color:green;
-            margin-top:20px;
-            color:white;
-            font-weight: bold;
-            font-size:20px;
-        }
-        #popupDeco{
-            width: 100%;
-            height: 50%;
-            margin-top:5px;
-            background-color:brown;
-        }
-        #popupDeco img{
+        #logoDiv img{
             width: 100%;
             height: 100%;
         }
-        /*
-            눈실험
-        */
-        #letterToIdArea{
-            width:50%;
-            height:20%;
-            border-radius:20px;
+        #authForm{
+            width: 80%;
+            height: 50%;
+            margin: 0 auto;
+            margin-top: 60px;
+            /*border:3px solid red;*/
+            
         }
-        .formInnerEle{
-            display:block;
+        #chooseForm{
+            width: 80%;
+            height: 20%;
+            margin: 0 auto;
+            display:flex;
+            justify-content: space-around;
         }
-        #writeLetterForm{
-            width: 90%;
-            height:0%;
-            margin:0 auto;
-            margin-top:10px;
+        .chooseBtn{
+            width:80%;
+            height:80%;
+            text-align:center;
+            font-weight: bold;
+            font-size:20px;
+            color:white;
+            border-radius:30px;
+            border:8px dashed green;
+        }
+        #loginForm{
+            width: 80%;
+            height: 70%;
+            margin: 0 auto;
+            margin-top: 20px;
+            /*border:3px solid red;*/
+            visibility:visible;
+            transition: all 0.5s;
+        }
+        
+        #registForm{
+            width: 80%;
+            height: 0%;
+            margin: 0 auto;
+            margin-top: 20px;
+            /*border:3px solid red;*/
             visibility:hidden;
-            transition: all 0.2s;
+            transition: all 0.5s;
         }
         .act {
             visibility: visible !important;
-            height: 65% !important;
+            height: 70% !important;
         }
-        .formInnerEle.textarea
-        {
-            width:100%;
-            height:100%;
-            margin-top:10px;
+        .act2 {
+            visibility: hidden !important;
+            height: 0% !important;
         }
-        .formInnerEle.textarea #letterContentArea{
-            width:100%;
-            height:100%;
+        input[type="text"],input[type="password"]{
+            width:80%;
+            height:30%;
+            border-radius: 30px;
+            margin:0 auto;
+            margin-bottom:20px;
         }
-        #sendLetterBtn{
-            width:100%;
-            background-color:green;
-            border-radius:20px;
-            color:white;
-        }
-        #close{
+        input[type="submit"] {
             all: unset;
+            width: 100%;
+            background-color:green;
+            font-weight: bold;
+            font-size:20px;
             color:white;
-            font-size:30px;
+            border-radius: 20px;;
+        }
+        label{
+            display:block;
+            text-align:center;
         }
     </style>
 </head>
@@ -262,122 +182,68 @@
 
     <div id="container">
 
-        <!--
-            눈실험
-        -->
-        
-        <!--
-            눈실험
-        -->
-
-
         <div id="contents">
 
             <div id="treeImg">
-                <div id="top">
-                    <div class="letters top"></div>
+                <div id="logoDiv">
+                    <img src="logo.png"/>
                 </div>
-                <div id="middle">
-                    <div class="letters middle"></div>
-                    <div class="letters middle"></div>
+                <!-- logoDiv 끝 -->
+                <div id="authForm">
+
+                    <div id="chooseForm" onclick="changeAuthStatus();">
+                        <button class="chooseBtn">로그인 / 회원가입</button>
+                    </div>
+
+                    <div id="loginForm">
+                        <form action="#" method="post">
+                            <label><input class="loginFormEle" type="text" name="id" placeholder="아이디"/></label>
+                            <label><input class="loginFormEle" type="password" name="pw" placeholder="패스워드"/></label>
+                            <label><input type="submit" value="로그인"/></label>
+                        </form>
+                    </div>
+
+                    <div id="registForm">
+                        <form action="" method="post">
+                            <label><input class="registFormEle" type="text" name="id" placeholder="아이디"/></label>
+                            <label><input class="registFormEle" type="password" name="pw" placeholder="패스워드"/></label>
+                            <label><input class="registFormEle" type="text" name="phone" placeholder="휴대폰번호"/></label>
+                            <label><input type="submit" value="회원가입"/></label>
+                        </form>
+                    </div>
+
                 </div>
-                <div id="bottom">
-                    <div class="letters bottom"></div>
-                    <div class="letters bottom"></div>
-                    <div class="letters bottom"></div>
-                </div>
-                <!--top middle bottom 끝-->
+                <!--loginForm 끝 혹시나.. 모달 쓸것같아서 얜 넓게두고 안에 하나더 자식요소를 만드는게..-->
             </div>
             <!--treeImg 끝-->
 
-            <!--
-            <div id="letterArea">
-                <textarea id="letterAreaInnerTextArea">
-
-                </textarea>
-            </div>
-            -->
-            <!-- letterArea 끝 -->
-
-            <div id="modalBtnDiv">
-                <button id="show"><img src="santa-claus.png"/></button>
-            </div>
-                <!--실험-->
-                <div class="background">
-                    <div class="window">
-                        <div class="popup">
-                            <div id="twoBtns">
-                                <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button" onclick="openWriteLetterPaper();">편지쓰기</button>
-                                
-                                <form id="writeLetterForm" action="#" method="post" name="writeLetterForm">
-                                    <label class="formInnerEle">받는이 : <input id="letterToIdArea" type="text" name="id"/></label>
-                                    <label class="formInnerEle textarea"><textarea id="letterContentArea" name="letterContent"></textarea></label>
-                                    <label class="formInnerEle"><input id="sendLetterBtn" type="submit" value="전송"/></label>
-                                </form>
-
-                                <button class="twoBtnsInnerBtn logOutBtnAndPopupDecoImg" id="logoutBtn" type="button">로그아웃</button>
-                                <div id="popupDeco">               
-                                    <img src="https://cdn.dribbble.com/users/1410984/screenshots/3176480/media/1b6cc71a194ad348c816cae00bcedcaf.gif"/>
-                                </div>
-                                <!-- popupDeco 끝 -->
-                            </div>
-                            <!-- twoBtns 끝 -->
-                            <button id="close">X</button>
-                            <!--close 끝-->
-                        </div>
-                        <!--popup 끝-->
-                        <div >
-                            <div></div>
-                        </div>
-                    </div>
-                    <!-- window 끝 -->
-                </div>
-                <!--실험 background 끝-->
-            <!--modalBtn 끝-->
         </div>
         <!--contents 끝-->
         
     </div>
-
+    <!-- container 끝 -->
     <script>
-        let Flag = false;
+        var Flag = false;
 
-        function show() {
-          document.querySelector(".background").className = "background show";
-        }
-  
-        function close() {
-          document.querySelector(".background").className = "background";
-        }
-        /**
-         * new Window에서 편지 쓰는 페이지 여는 함수
-         * 
-        */
-        function openWriteLetterPaper(){
-            document.getElementById("writeLetterForm").classList.toggle('act');
-            const logoutBtn = document.getElementById("logoutBtn");
-            const popupDeco = document.getElementById("popupDeco");
-            const formEleArr = document.getElementsByClassName("formInnerEle");
-
+        function changeAuthStatus(){
+            const loginForm = document.getElementById("loginForm");
+            const registForm = document.getElementById("registForm");
             if(!Flag){
-                Array.from(formEleArr).forEach(item=>{
-                    item.style.opacity = 1;
-                })
-                logoutBtn.style.display = "none";
-                popupDeco.style.display = "none";
+                loginForm.style.opacity=0;
+                registForm.style.opacity=1;
+                loginForm.classList.toggle('act2');
+                registForm.classList.toggle('act');
                 Flag = true;
-            } else {
-                Array.from(formEleArr).forEach(item=>{
-                    item.style.opacity = 0;
-                })
-                logoutBtn.style.display = "block";
-                popupDeco.style.display = "block";
+            }else {
+                loginForm.style.opacity=1;
+                registForm.style.opacity=0;
+                registForm.classList.toggle('act');
+                loginForm.classList.toggle('act2');
                 Flag = false;
             }
         }
-
-        document.querySelector("#show").addEventListener("click", show);
-        document.querySelector("#close").addEventListener("click", close);
+        
+        
         $(document).ready(function(){
             $(document).snowfall({deviceorientation : true, round : true, minSize: 1, maxSize:8,  flakeCount : 100});
         });
