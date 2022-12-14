@@ -29,20 +29,22 @@ public class UsersController {
 	
 	private final UsersService usersService;
 	
-	@GetMapping("/users/login")
-	public String loginForm(@ModelAttribute("loginForm")LoginForm loginForm) {
-		return "users/loginForm";
+	@GetMapping("/")
+	public String loginForm(@ModelAttribute("loginForm")LoginForm loginForm,
+							@ModelAttribute("usersForm")UsersForm usersForm) {
+		return "index";
 	}
-
+	
+	// 로그인
 	@PostMapping("/users/login")
 	public String loginOk(@ModelAttribute LoginForm form, Model model, 
 			RedirectAttributes redirectAttributes, HttpServletRequest request,
-			@RequestParam(defaultValue="/")String redirectURL) {
+			@RequestParam(defaultValue="/createTree")String redirectURL) {
 		
 		Users loginUsers = usersService.login(form.getU_Id(), form.getPassword());
 		if( loginUsers == null ) {
 			// 로그인 실패
-			return "users/loginForm";
+			return "index";
 		} 
 		
 		// 로그인 성공
@@ -50,24 +52,17 @@ public class UsersController {
 		// 세션에 로그인 회원 정보 보관
 		session.setAttribute(SessionConst.LOGIN_USERS, loginUsers);
 		session.setAttribute("userInfo", loginUsers.getNickname());
-		System.out.println(loginUsers.getNickname());
-		return "redirect:" + redirectURL;
+		return "createTree";
 	}
 	
-	
-	@GetMapping("/users/new")
-	public String createForm(Model model) {
-		model.addAttribute("usersForm", new UsersForm());
-		return "users/createUsersForm";
-	}
-	
+	// 회원가입
 	@PostMapping("/users/new")
 	public String create(@Valid UsersForm form, BindingResult result) {
 		
 		
 		// error 발생 시
 		if(result.hasErrors()) {
-			return "users/createUsersForm";
+			return "index";
 		}
 		
 		// 정상 로직, service
