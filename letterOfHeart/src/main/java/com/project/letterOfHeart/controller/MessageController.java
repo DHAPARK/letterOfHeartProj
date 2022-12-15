@@ -15,18 +15,18 @@ import lombok.RequiredArgsConstructor;
 public class MessageController {
 	@Autowired
 	private MessageService messageService;
-	
+
 	@GetMapping("/message/write")
 	public String messageForm() {
 		return "message/message";
 	}
-	 @PostMapping("/board/writepro")
-	    public String boardWritePro(Message message){
 
-	        messageService.wirte(message);
+	@PostMapping("/board/writepro")
+	public String boardWritePro(Message message) {
 
-	        return "index";
-	    }
-	
-	
+		messageService.wirte(message);
+
+		return "index";
+	}
+
 }

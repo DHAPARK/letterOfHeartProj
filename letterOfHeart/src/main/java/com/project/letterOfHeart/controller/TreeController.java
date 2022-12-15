@@ -1,6 +1,5 @@
 package com.project.letterOfHeart.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -11,12 +10,12 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class TreeController {
-	
+
 	private final TreeService service;
-	
+
 	@GetMapping("/users/tree")
 	public String myTree() {
 		return "tree";
 	}
-	
+
 }
