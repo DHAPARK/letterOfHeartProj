@@ -51,7 +51,7 @@ public class UsersController {
 		// 세션에 로그인 회원 정보 보관
 		session.setAttribute(SessionConst.LOGIN_USERS, loginUsers);
 		session.setAttribute("userInfo", loginUsers.getNickname());
-		return "createTree";
+		return "myTree";
 	}
 
 	// 회원가입
