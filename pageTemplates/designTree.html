@@ -364,8 +364,6 @@
 
             nDv.style.height = '100%';
 
-            //nDv.style.backgroundColor = 'yellow';
-
             nDv.style.marginRight = '10px';
 
             nDv.onclick = function cgMyBg(){
@@ -375,8 +373,6 @@
             }
 
             cBg.appendChild( nDv );
-
-            //cBg.style.display="none";
 
         }
 
@@ -406,16 +402,8 @@
             nDv.ondragstart = function drag(e){
                 e.dataTransfer.setData('text',e.target.id);
             }
-            
-            nDv.onclick = function cgMyBg(){
-
-                //treeImg.style.backgroundImage = `url(${this.src})`;
-                
-            }
 
             cDc.appendChild( nDv );
-
-            //cDc.style.display="none";
 
         }
         
