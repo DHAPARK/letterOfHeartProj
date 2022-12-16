@@ -110,7 +110,7 @@
 
         #treeImg{
             width:100%;
-            height:90%;
+            height:78%;
             border: 1px solid white;
             /*background-image: url("tree1.png");*/
             background-image: url("tree3.png");
@@ -261,6 +261,16 @@
             background-color:black;
             display: flex;
         }
+        #chooseDeCo{
+            width:100%;
+            height:10%;
+            background-color:white;
+            display: flex;
+            white-space:nowrap;
+            overflow: auto;
+            margin-top:2%;
+        }
+        
     </style>
 </head>
 <body>
@@ -280,7 +290,8 @@
 
         <div id="contents">
 
-            <div id="treeImg">
+            <div id="treeImg" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <!--
                 <div id="top">
                     <div class="letters top"></div>
                 </div>
@@ -293,6 +304,8 @@
                     <div csplass="letters bottom"></div>
                     <div class="letters bottom"></div>
                 </div>
+                -->
+
                 <!--top middle bottom 끝-->
             </div>
             <!--treeImg 끝-->
@@ -300,15 +313,46 @@
                 
             </div>
             <!--chooseBgImg 끝-->
+            <div id="chooseDeCo">
+                
+            </div>
+            <!--chooseDeCo 끝-->
         </div>
         <!--contents 끝-->
         
     </div>
-
+    
+    
+        
+    
+        
     <script>
         
+
+        /*<!-- drag 관련 js -->*/
+        const allowDrop = (e) => e.preventDefault();
+        //const drag = (e) => e.dataTransfer.setData('text',e.target.id);
+
+        const drop = (e) => {
+
+            e.preventDefault() ;
+
+            let tg = document.getElementById( e.dataTransfer.getData('text') ) ;
+            
+            
+            e.target.appendChild(tg);
+            
+            tg.style.position = 'fixed';
+            tg.style.left = `${e.clientX - 50}px` ;
+            tg.style.top = `${e.clientY - 50}px` ;
+            
+        }
+        /*<!-- drag 관련 js -->*/
+
         const cBg = document.getElementById("chooseBgImg") ;
         const treeImg = document.getElementById("treeImg") ;
+
+
 
         for( var i = 1 ; i < 4 ; i++ ){
 
@@ -320,7 +364,7 @@
 
             nDv.style.height = '100%';
 
-            nDv.style.backgroundColor = 'yellow';
+            //nDv.style.backgroundColor = 'yellow';
 
             nDv.style.marginRight = '10px';
 
@@ -332,10 +376,57 @@
 
             cBg.appendChild( nDv );
 
+            //cBg.style.display="none";
+
+        }
+
+
+        const cDc = document.getElementById("chooseDeCo") ;
+
+        for ( var i = 1 ; i <= 10 ; i++ ) {
+
+            let nDv = document.createElement( "img" );
+
+            nDv.id = `deco${i}`;
+
+            nDv.src = `deco${i}.png`;
+
+            nDv.style.width = '100px';
+
+            nDv.style.height = '100px';
+
+            nDv.style.borderRadius = '20px';
+
+            nDv.style.position = 'static';
+            
+            nDv.style.marginRight = '10px';
+
+            nDv.draggable = true;
+            
+            nDv.ondragstart = function drag(e){
+                e.dataTransfer.setData('text',e.target.id);
+            }
+            
+            nDv.onclick = function cgMyBg(){
+
+                //treeImg.style.backgroundImage = `url(${this.src})`;
+                
+            }
+
+            cDc.appendChild( nDv );
+
+            //cDc.style.display="none";
+
         }
         
-
+        $(document).ready(function(){
+            $(document).snowfall({deviceorientation : true, round : true, minSize: 1, maxSize:8,  flakeCount : 100});
+        });
     </script>
+    <!-- 배치 관련 js -->
+
+    
+    
 </body>
 
 </html>
