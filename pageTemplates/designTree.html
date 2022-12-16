@@ -110,7 +110,7 @@
 
         #treeImg{
             width:100%;
-            height:78%;
+            height:73%;
             border: 1px solid white;
             /*background-image: url("tree1.png");*/
             background-image: url("tree3.png");
@@ -270,6 +270,15 @@
             overflow: auto;
             margin-top:2%;
         }
+        #storeBtn{
+            all: unset;
+            width:100%;
+            height:5%;
+            background-color:green;
+            border-radius: 20px;
+            color:white;
+            text-align: center;
+        }
         
     </style>
 </head>
@@ -317,6 +326,8 @@
                 
             </div>
             <!--chooseDeCo 끝-->
+
+            <button id="storeBtn" onclick="store();">저장</button>
         </div>
         <!--contents 끝-->
         
@@ -327,11 +338,13 @@
     
         
     <script>
-        
+        /**
+         * db로 던질 각 이미지들의 name과 좌표값
+        */
+        const imgRangeSet = [] ;
 
         /*<!-- drag 관련 js -->*/
         const allowDrop = (e) => e.preventDefault();
-        //const drag = (e) => e.dataTransfer.setData('text',e.target.id);
 
         const drop = (e) => {
 
@@ -345,6 +358,10 @@
             tg.style.position = 'fixed';
             tg.style.left = `${e.clientX - 50}px` ;
             tg.style.top = `${e.clientY - 50}px` ;
+            
+            console.log(`${tg.src},x:${tg.style.left},y:${tg.style.top}`);
+            
+            imgRangeSet.push( `${tg.src},x:${tg.style.left},y:${tg.style.top}` ) ;
             
         }
         /*<!-- drag 관련 js -->*/
@@ -410,6 +427,27 @@
         $(document).ready(function(){
             $(document).snowfall({deviceorientation : true, round : true, minSize: 1, maxSize:8,  flakeCount : 100});
         });
+
+        function store() {
+
+            if ( imgRangeSet.length == 0 ) {
+
+                console.log( `변경사항이 없습니다` ) ;
+
+            } else {
+
+                imgRangeSet.forEach( item =>{
+
+                    console.log( item ) ;
+
+                } ) ;
+
+            }
+
+            console.log( imgRangeSet );
+
+        }
+
     </script>
     <!-- 배치 관련 js -->
 
