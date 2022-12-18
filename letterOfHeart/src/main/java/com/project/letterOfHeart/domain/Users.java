@@ -37,6 +37,10 @@ public class Users {
     @Column(length = 8)
     private String nickname;            // 유저 닉네임
     private LocalDateTime createDate;   // 가입 일자
+    /*
+     * 휴대폰번호 추가 -박도현
+     * */
+    private String phone;
     
     @OneToMany(mappedBy = "users")
     private List<Tree> tree = new ArrayList<Tree>();

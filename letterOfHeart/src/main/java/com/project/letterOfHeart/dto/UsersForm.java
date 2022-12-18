@@ -14,5 +14,6 @@ public class UsersForm {
 	private String u_Id;
 	private String password;
 	private String nickname;
+	private String phone;
 	private LocalDateTime createDate;
 }
