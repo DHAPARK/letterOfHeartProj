@@ -4,12 +4,12 @@ server:
 
 # 로컬 DB
 
-#spring:
-#  datasource:
-#    url: jdbc:oracle:thin:@localhost:1521:xe
-#    username: newyear
-#    password: newyear
-#    driver-class-name: oracle.jdbc.driver.OracleDriver
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: newyear
+    password: newyear
+    driver-class-name: oracle.jdbc.driver.OracleDriver
 
 #spring:
 #  datasource:
@@ -31,12 +31,12 @@ server:
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 
 
-spring:
-  datasource:
-    url: jdbc:oracle:thin:@lohp_high?TNS_ADMIN=./src/main/resources/oracleCloud/Wallet_lohp
-    username: admin
-    password: HappyNewYear2023
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@lohp_high?TNS_ADMIN=./src/main/resources/oracleCloud/Wallet_lohp
+#    username: admin
+#    password: HappyNewYear2023
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
     
     
   jpa:

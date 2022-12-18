@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -194,12 +194,14 @@
                     <div id="chooseForm" onclick="changeAuthStatus();">
                         <button class="chooseBtn">로그인 / 회원가입</button>
                     </div>
-
+<!-- 					th:action="@{/users/login/{u_id}(u_id=${loginForm.u_id})}" -->
+<!-- 					th:href="@{/users/login/{u_id}(u_id=${loginForm.u_id})}" -->
+<!-- 					th:onclick="|location.href='@{/users/login/{u_id}(u_id=${loginForm.u_id})}'|" -->
                    <div id="loginForm">
-                        <form action="/users/login" th:object="${loginForm}" method="post">
+                        <form  action="/users/login"  th:object="${loginForm}" method="post">
                             <label for="u_Id"><input class="loginFormEle" type="text" th:field="*{u_Id}" name="u_Id" placeholder="아이디"/></label>
                             <label for="password"><input class="loginFormEle" type="password" th:field="*{password}"  name="password" placeholder="패스워드"/></label>
-                            <label><input type="submit" value="로그인"/></label>
+                            <label><input  type="submit" value="로그인"/></label>
                         </form>
                     </div>
 
