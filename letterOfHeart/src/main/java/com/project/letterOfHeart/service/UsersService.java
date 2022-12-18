@@ -36,8 +36,4 @@ public class UsersService {
 		}
 		
 	}
-	
-	public Users findOne(Long id) {
-		return usersRepository.findOne(id);
-	}
 }

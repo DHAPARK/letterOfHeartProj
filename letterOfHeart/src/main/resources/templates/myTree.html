@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -113,7 +113,7 @@
             height:90%;
             border: 1px solid white;
             /*background-image: url("tree1.png");*/
-            background-image: url("/resources/images/tree3.png");
+            background-image: url("resources/images/tree3.png");
             background-repeat: no-repeat;
             background-size: contain;
             background-position : center;
@@ -214,11 +214,9 @@
         /*
             눈실험
         */
-       
-/*         수정 */
-        #content{
-            width:100%;
-            height:100%;
+        #letterToIdArea{
+            width:50%;
+            height:20%;
             border-radius:20px;
         }
         .formInnerEle{
@@ -242,8 +240,7 @@
             height:100%;
             margin-top:10px;
         }
-/*         수정 */
-        .formInnerEle.textarea #titleNickname{
+        .formInnerEle.textarea #letterContentArea{
             width:100%;
             height:100%;
         }
@@ -298,13 +295,13 @@
             <div id="treeImg">
                 <div id="top">
                     <div class="letters top">
-                        <img class="lettersImg" src="/resources/images/letterImg1.png"/>
+                        <img class="lettersImg" src="resources/images/letterImg1.png"/>
                     </div>
                     <!--letters top 끝-->
                 </div>
                 <div id="middle">
                     <div class="letters middle">
-                        <img class="lettersImg" src="/resources/images/letterImg2.png"/>
+                        <img class="lettersImg" src="resources/images/letterImg2.png"/>
                     </div>
                     <!-- letters middle 끝 -->
                     <div class="letters middle"></div>
@@ -327,23 +324,20 @@
             -->
             <!-- letterArea 끝 -->
 
-			
-
             <div id="modalBtnDiv">
-                <button id="show"><img src="/resources/images/santa-claus.png"/></button>
+                <button id="show"><img src="resources/images/santa-claus.png"/></button>
             </div>
                 <!--실험-->
                 <div class="background">
                     <div class="window">
                         <div class="popup">
                             <div id="twoBtns">
-                                <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button"  onclick="openWriteLetterPaper();">편지쓰기</button>
+                                <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button" onclick="openWriteLetterPaper();">편지쓰기</button>
                                 
-                                <form id="writeLetterForm" action="/message/write"   method="post"  name="writeLetterForm">
-                                    <label class="formInnerEle">작성자 : <input  id="titleNickname" type="text" name="titleNickname"/></label>
-                                    <label class="formInnerEle textarea"><textarea id="content" name="content"></textarea></label>
-                                    <label class="formInnerEle"><input  id="sendLetterBtn"  type="submit" value="전송"/></label>
-                                    <input type="text" th:value="${id}" id="id" name="id" >
+                                <form id="writeLetterForm" action="#" method="post" name="writeLetterForm">
+                                    <label class="formInnerEle">받는이 : <input id="letterToIdArea" type="text" name="id"/></label>
+                                    <label class="formInnerEle textarea"><textarea id="letterContentArea" name="letterContent"></textarea></label>
+                                    <label class="formInnerEle"><input id="sendLetterBtn" type="submit" value="전송"/></label>
                                 </form>
 
                                 <button class="twoBtnsInnerBtn logOutBtnAndPopupDecoImg" id="logoutBtn" type="button">로그아웃</button>

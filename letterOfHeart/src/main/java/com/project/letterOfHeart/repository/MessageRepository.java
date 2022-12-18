@@ -1,9 +1,12 @@
 package com.project.letterOfHeart.repository;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+=======
+>>>>>>> parent of 74974f6 (기초작업)
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageRepository{
 
+<<<<<<< HEAD
 	private final EntityManager em;
 	
 	public void save(Message message) {
@@ -29,4 +33,6 @@ public class MessageRepository{
 
 
 
+=======
+>>>>>>> parent of 74974f6 (기초작업)
 }

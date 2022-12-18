@@ -1,36 +1,23 @@
 package com.project.letterOfHeart.controller;
 
-import java.time.LocalDateTime;
-
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.letterOfHeart.domain.Message;
-import com.project.letterOfHeart.domain.Tree;
-import com.project.letterOfHeart.domain.Users;
-import com.project.letterOfHeart.dto.MessageForm;
 import com.project.letterOfHeart.service.MessageService;
-import com.project.letterOfHeart.service.TreeService;
-import com.project.letterOfHeart.service.UsersService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor  
+@RequiredArgsConstructor
 public class MessageController {
-//	@Autowired
-	private final MessageService messageService;
-	private final UsersService userService;
-	private final TreeService treeService;
+	@Autowired
+	private MessageService messageService;
 
 	@GetMapping("/message/write")
+<<<<<<< HEAD
 	public String messageForm( Model model, MessageForm messageForm) {
 		model.addAttribute("messageForm", new MessageForm());
 //		model.addAttribute("messages", messageService.messageList());
@@ -55,32 +42,18 @@ public class MessageController {
 		
 		System.out.println(messageForm.getId());
 		return "redirect:/myTree/"+messageForm.getId();
+=======
+	public String messageForm() {
+		return "message/message";
+	}
+
+	@PostMapping("/board/writepro")
+	public String boardWritePro(Message message) {
+
+		messageService.wirte(message);
+
+		return "index";
+>>>>>>> parent of 74974f6 (기초작업)
 	}
 
 }
-
-
-//@Controller
-//@RequiredArgsConstructor
-//public class MessageController {
-//
-//    private final MessageService messageService;
-//
-//    @GetMapping("/message/write")
-//    public String writeForm( Model model) {
-//    	MessageForm messageForm = new MessageForm();
-//        model.addAttribute("messageForm", messageForm );
-//        return "myTree";
-//    }
-//
-//    @PostMapping("/message/write")
-//    public String write( MessageForm messageForm) {
-//        Message message = new Message();
-//        message.setTitleNickname(messageForm.getTitleNickname());
-//        message.setContent(messageForm.getContent());
-//
-//
-//        messageService.wirte(message);
-//        return "myTree";
-//    }
-//}
