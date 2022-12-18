@@ -31,13 +31,13 @@ public class MessageController {
 	private final TreeService treeService;
 
 	@GetMapping("/message/write")
-	public String messageForm( Model model) {
+	public String messageForm( Model model, MessageForm messageForm) {
 		model.addAttribute("messageForm", new MessageForm());
-		return "myTree";
+//		model.addAttribute("messages", messageService.messageList());
+		return "redirect:/myTree/"+ messageForm.getId();
 	}
-
 	@PostMapping("/message/write")
-	public String boardWritePro(MessageForm messageForm) {
+	public String boardWritePro(MessageForm messageForm ,Model model) {
 		Message message = new Message();
 		Users user = userService.findOne(messageForm.getId());
 		Tree tree = treeService.findOne(messageForm.getId());
@@ -52,9 +52,9 @@ public class MessageController {
 		message.setUsers(user);
 		message.setTree(tree);
 		messageService.wirte(message);
-
+		
 		System.out.println(messageForm.getId());
-		return "myTree";
+		return "redirect:/myTree/"+messageForm.getId();
 	}
 
 }

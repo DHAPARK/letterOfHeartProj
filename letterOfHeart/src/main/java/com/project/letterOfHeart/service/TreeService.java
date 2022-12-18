@@ -25,12 +25,12 @@ public class TreeService {
 		treeRepository.save(tree);
 	}
 	
-	@Transactional
-	public Integer countById(String u_id) {
-		List<Message> msg =  messageRepository.findById(u_id);
-		int count = msg.size();
-		return count;
-	}
+//	@Transactional
+//	public Integer countById(String u_id) {
+//		List<Message> msg =  messageRepository.findById(u_id);
+//		int count = msg.size();
+//		return count;
+//	}
 
 	@Transactional(readOnly = true)
 	public Tree findOne(Long id) {

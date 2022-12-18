@@ -21,7 +21,9 @@ import com.project.letterOfHeart.domain.Message;
 import com.project.letterOfHeart.domain.Tree;
 import com.project.letterOfHeart.domain.Users;
 import com.project.letterOfHeart.dto.LoginForm;
+import com.project.letterOfHeart.dto.MessageForm;
 import com.project.letterOfHeart.dto.UsersForm;
+import com.project.letterOfHeart.service.MessageService;
 import com.project.letterOfHeart.service.TreeService;
 import com.project.letterOfHeart.service.UsersService;
 import com.project.letterOfHeart.session.SessionConst;
@@ -34,6 +36,7 @@ public class UsersController {
 
 	private final UsersService usersService;
 	private final TreeService treeService;
+	private final MessageService messageService;
 
 	@GetMapping("/")
 	public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
@@ -65,6 +68,7 @@ public class UsersController {
 	public String getId(Model model, @PathVariable("id")long id) {
 		model.addAttribute("userForm", new UsersForm());
 		model.addAttribute("id", id);
+		model.addAttribute("messages", messageService.messageList(id));
 		return "mytree";
 	}
 
