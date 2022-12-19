@@ -68,6 +68,7 @@ public class UsersController {
 		users.setU_Id(form.getU_Id());
 		users.setPassword(form.getPassword());
 		users.setNickname(form.getNickname());
+		users.setPhone(form.getPhone());
 		users.setCreateDate(LocalDateTime.now());
 
 		usersService.join(users);
