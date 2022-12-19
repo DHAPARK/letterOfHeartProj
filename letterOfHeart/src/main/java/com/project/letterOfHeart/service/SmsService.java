@@ -3,89 +3,117 @@ package com.project.letterOfHeart.service;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.management.openmbean.InvalidKeyException;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.hibernate.mapping.List;
-import org.springframework.expression.ParseException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.letterOfHeart.dto.MessagesRequestDto;
 import com.project.letterOfHeart.dto.SendSmsResponseDto;
 import com.project.letterOfHeart.dto.SmsRequestDto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@Component
+@PropertySource("classpath:application.properties")
+@Slf4j
+@RequiredArgsConstructor
+@Service
 public class SmsService {
+	
+	//휴대폰 인증 번호
+    private final String smsConfirmNum = createSmsKey();
+//    private final RedisUtill redisUtil;
 
-    private final ApplicationNaverSENS applicationNaverSENS;
+    @Value("${naver-cloud-sms.accessKey}")
+    private String accessKey;
+
+    @Value("${naver-cloud-sms.secretKey}")
+    private String secretKey;
+
+    @Value("${naver-cloud-sms.serviceId}")
+    private String serviceId;
+
+    @Value("${naver-cloud-sms.senderPhone}")
+    private String phone;
     
-    public SendSmsResponseDto sendSms(String recipientPhoneNumber, String content) throws ParseException, JsonProcessingException, UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, URISyntaxException {
-        Long time = new DateCreator().getTimestamp().getTime();
-        List<MessagesRequestDto> messages = new ArrayList<>();
-        // 보내는 사람에게 내용을 보냄.
-        messages.add(new MessagesRequestDto(recipientPhoneNumber,content)); // content부분이 내용임
+    public SendSmsResponseDto sendSms(MessagesRequestDto messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+        String time = Long.toString(System.currentTimeMillis());
 
-        // 전체 json에 대해 메시지를 만든다.
-        SmsRequestDto smsRequestDto = new SmsRequestDto("SMS", "COMM", "82", applicationNaverSENS.getSendfrom(), "MangoLtd", messages);
-
-        // 쌓아온 바디를 json 형태로 변환시켜준다.
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonBody = objectMapper.writeValueAsString(smsRequestDto);
-
-        // 헤더에서 여러 설정값들을 잡아준다.
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("x-ncp-apigw-timestamp", time.toString());
-        headers.set("x-ncp-iam-access-key", applicationNaverSENS.getAccesskey());
+        headers.set("x-ncp-apigw-timestamp", time);
+        headers.set("x-ncp-iam-access-key", accessKey);
+        headers.set("x-ncp-apigw-signature-v2", getSignature(time)); // signature 서명
 
-        // 제일 중요한 signature 서명하기.
-        String sig = makeSignature(time);
-        System.out.println("sig -> " + sig);
-        headers.set("x-ncp-apigw-signature-v2", sig);
+        List<MessagesRequestDto> messages = new ArrayList<>();
+        messages.add(messageDto);
 
-        // 위에서 조립한 jsonBody와 헤더를 조립한다.
-        HttpEntity<String> body = new HttpEntity<>(jsonBody, headers);
-        System.out.println(body.getBody());
+        SmsRequestDto request = SmsRequestDto.builder()
+                .type("SMS")
+                .contentType("COMM")
+                .countryCode("82")
+                .from(phone)
+                .content("[테스트] 인증번호 [" + smsConfirmNum + "]를 입력해주세요")
+                .messages(messages)
+                .build();
 
-        // restTemplate로 post 요청을 보낸다. 별 일 없으면 202 코드 반환된다.
+        ObjectMapper objectMapper = new ObjectMapper();
+        String body = objectMapper.writeValueAsString(request);
+        HttpEntity<String> httpBody = new HttpEntity<>(body, headers);
+
         RestTemplate restTemplate = new RestTemplate();
-        SendSmsResponseDto sendSmsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+applicationNaverSENS.getServiceid()+"/messages"), body, SendSmsResponseDto.class);
-        System.out.println(sendSmsResponseDto.getStatusCode());
-        return sendSmsResponseDto;
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        //restTemplate로 post 요청 보내고 오류가 없으면 202코드 반환
+        SendSmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SendSmsResponseDto.class);
+       // redisUtil.setDataExpire(smsConfirmNum, messageDto.getTo(), 60 * 3L); // 유효시간 3분
+        return smsResponseDto;
     }
 
-    public String makeSignature(Long time) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException {
-        String space = " ";					// one space
-        String newLine = "\n";					// new line
-        String method = "POST";					// method
-        String url = "/sms/v2/services/"+applicationNaverSENS.getServiceid()+"/messages";	// url (include query string)
-        String timestamp = time.toString();			// current timestamp (epoch)
-        String accessKey = applicationNaverSENS.getAccesskey();			// access key id (from portal or Sub Account)
-        String secretKey = applicationNaverSENS.getSecretkey();
+
+
+    // 인증코드 만들기
+    public static String createSmsKey() {
+        StringBuffer key = new StringBuffer();
+        Random rand = new Random();
+
+        for (int i = 0; i < 5; i++) { // 인증코드 5자리
+            key.append((rand.nextInt(10)));
+        }
+        return key.toString();
+    }
+
+    public String getSignature(String time) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+        String space = " ";
+        String newLine = "\n";
+        String method = "POST";
+        String url = "/sms/v2/services/"+ this.serviceId+"/messages";
+        String accessKey = this.accessKey;
+        String secretKey = this.secretKey;
 
         String message = new StringBuilder()
                 .append(method)
                 .append(space)
                 .append(url)
                 .append(newLine)
-                .append(timestamp)
+                .append(time)
                 .append(newLine)
                 .append(accessKey)
                 .toString();
@@ -100,3 +128,4 @@ public class SmsService {
         return encodeBase64String;
     }
 }
+

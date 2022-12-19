@@ -218,7 +218,7 @@
                             <label for="u_Id"><input class="registFormEle" type="text" th:field="*{u_Id}" name="id" placeholder="아이디"/></label>
                             <label for="password"><input class="registFormEle" type="password" th:field="*{password}" name="password" placeholder="패스워드"/></label>
                             <label for="nickname"><input class="registFormEle" type="text" th:field="*{nickname}" name="nickname" placeholder="닉네임"/></label>
-                            <label for="phone"><input class="registFormEle registFormElePhone" type="text" th:field="*{phone}" name="phone" placeholder="(-)제외한 휴대폰번호"/> <button id="verifyPhoneBtn">인증</button> </label>
+                            <label for="phone"><input class="registFormEle registFormElePhone" type="text" th:field="*{phone}" name="phone" placeholder="(-)제외한 휴대폰번호"/> <input type="submit" id="verifyPhoneBtn" oncllick="verify()" value="인증"> </label>
                             <label><input type="submit" value="회원가입"/></label>
                         </form>
                     </div>
@@ -233,8 +233,8 @@
         
     </div>
     <!-- container 끝 -->
+
     <script>
-    	
     
         var Flag = false;
 
