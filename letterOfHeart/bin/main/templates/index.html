@@ -220,7 +220,7 @@
                             <label for="nickname"><input class="registFormEle" type="text" th:field="*{nickname}" name="nickname" placeholder="닉네임"/></label>
                             <label for="phone">
                             	<input class="registFormEle registFormElePhone" type="text" th:field="*{phone}" name="phone" id="phone" placeholder="(-)제외한 휴대폰번호"/> 
-                            	<input type="button" id="verifyPhoneBtn" onclick="" value="인증"> 
+                            	<input type="button" id="verifyPhoneBtn" onclick="requestSMSVerifyCode();" value="인증"> 
                             </label>
                             <label><input type="submit" value="회원가입"/></label>
                         </form>
@@ -263,6 +263,24 @@
         $(document).ready(function(){
             $(document).snowfall({deviceorientation : true, round : true, minSize: 1, maxSize:8,  flakeCount : 100});
         });
+        
+        
+        function requestSMSVerifyCode(){
+        	
+        	axios({
+                url: '/users/tree',
+                method: 'GET',
+                //baseURL: "http://localhost:9090",
+                //data: Qs.stringify(data)
+            }).then((res)=>{
+                console.log(res);
+                
+            }).catch(error=>{
+                console.log(`서버와 연결 실패 ${error}`);
+                throw new Error(error);
+            });
+        }
+        
     </script>
 </body>
 
