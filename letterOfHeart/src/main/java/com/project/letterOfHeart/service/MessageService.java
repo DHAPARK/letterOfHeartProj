@@ -28,5 +28,9 @@ public class MessageService {
 		return messageRepository.findByIdList(id);
 	}
 	
+	@Transactional(readOnly = true)
+	public int findAllById(Long id) {
+		return messageRepository.findByIdList(id).size();
+	}
 	
 }

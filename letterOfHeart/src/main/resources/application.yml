@@ -5,6 +5,24 @@ jwt:
   secret: Y29tLnByb2plY3QubGV0dGVyT2ZIZWFydC5qd3QudGVzdC50b2tlbg== 
   # com.project.letterOfHeart.jwt.test.token
 
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: springjpa
+    password: springjpa
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
 
 # 로컬 DB
 
@@ -15,12 +33,12 @@ jwt:
 #    password: newyear
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 
-spring:
-  datasource:
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: springjpa
-    password: springjpa
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@localhost:1521:xe
+#    username: springjpa
+#    password: springjpa
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
     
 
 # 원격 DB
@@ -43,16 +61,16 @@ spring:
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
     
     
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-      
-      
-logging.level:
-  org.hibernate.SQL: debug 
-  org.hibernate.type: trace
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#      
+#      
+#logging.level:
+#  org.hibernate.SQL: debug 
+#  org.hibernate.type: trace
  

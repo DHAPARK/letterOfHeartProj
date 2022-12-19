@@ -20,14 +20,20 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.thymeleaf.extras.eclipse.core.ThymeleafBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+		<nature>org.thymeleaf.extras.eclipse.core.ThymeleafNature</nature>
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1670906654147</id>
+			<id>0</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

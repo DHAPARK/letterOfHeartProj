@@ -123,6 +123,8 @@ public class UsersController {
 		model.addAttribute("id", id);
 		// 해당 id의 메세지 리스트
 		model.addAttribute("messages", messageService.messageList(id));
+		// 메세지 개수
+		model.addAttribute("msgCnt", messageService.findAllById(id));
 		return mv;
 	}
 

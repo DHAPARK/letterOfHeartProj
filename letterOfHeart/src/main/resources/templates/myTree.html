@@ -281,15 +281,17 @@
         -->
 		<table style="position:absolute" class="table">
 			<thead>
-				<tr>
+				<tr style="color: white;">
 					<th>작성자</th>
 					<th>메세지</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody style="color: white;">
+			<p style="color: white;">메세지 개수</p>
+			<p th:text="${msgCnt}" style="color: white;"></p>
 				<tr th:each="message:${messages}">
-					<td th:text="${message.titleNickname}"></td>
-					<td th:text="${message.content}"></td>
+					<td th:text="${message.titleNickname}" ></td>
+					<td th:text="${message.content}" ></td>
 				</tr>
 			</tbody>
 		</table>
