@@ -39,6 +39,13 @@ spring:
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
     
     
+  sens:
+    NCP_SENS_ACCESS: QKlhgcIXEXKDhxNiay2d
+    NCP_SENS_SECRET: anbHiCJCAIMZocnhOQN2yaPGvSUsewooTzCKD8rJ
+    NCP_SENS_ID: ncp:sms:kr:297655669204:dhaparksns
+    NCP_SENS_NUMBER: 01057371087
+    
+    
   jpa:
     hibernate:
       ddl-auto: create
