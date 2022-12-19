@@ -1,5 +1,9 @@
 server:
   port: 9090
+  
+jwt:
+  secret: Y29tLnByb2plY3QubGV0dGVyT2ZIZWFydC5qd3QudGVzdC50b2tlbg== 
+  # com.project.letterOfHeart.jwt.test.token
 
 
 # 로컬 DB
@@ -37,13 +41,15 @@ spring:
 #    username: admin
 #    password: HappyNewYear2023
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
-    
-    
-  sens:
-    NCP_SENS_ACCESS: QKlhgcIXEXKDhxNiay2d
-    NCP_SENS_SECRET: anbHiCJCAIMZocnhOQN2yaPGvSUsewooTzCKD8rJ
-    NCP_SENS_ID: ncp:sms:kr:297655669204:dhaparksns
-    NCP_SENS_NUMBER: 01057371087
+
+
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@lohp_high?TNS_ADMIN=./src/main/resources/oracleCloud/Wallet_lohp
+#    username: admin
+#    password: HappyNewYear2023
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
+
     
     
   jpa:

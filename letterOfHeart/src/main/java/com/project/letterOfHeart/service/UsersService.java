@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.letterOfHeart.domain.Users;
 import com.project.letterOfHeart.repository.UsersRepository;
+import com.project.letterOfHeart.repository.repository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsersService {
 
+	private final repository repository;
 	private final UsersRepository usersRepository;
 	
 	// 회원가입
-	// @Transactional : org.springframework.transaction.annotation
 	@Transactional
 	public Long join(Users users) {
 		usersRepository.save(users);
@@ -23,12 +24,12 @@ public class UsersService {
 	}
 	
 	// 로그인
-	public Users login(String u_Id, String password) {
+	public Users login(String accoutid, String password) {
 		
-		Users users = usersRepository.findByUsersId(u_Id);
-		
-		if(users != null && users.getU_Id().equals(u_Id)
-				&& users.getPassword().equals(password)) {
+		Users users = usersRepository.findByAccountsId(accoutid);
+//		if(users != null && users.getUsername().equals(accoutid)
+//				&& users.getPassword().equals(password)) {
+		if(users != null && users.getPassword().equals(password)) {
 			// 로그인 성공
 			return users;
 		}else {
@@ -36,4 +37,15 @@ public class UsersService {
 		}
 		
 	}
+	
+	//  1건 조회
+	public Users findOne(Long id) {
+		return usersRepository.findOne(id);
+	}
+	
+	public Users findById(String accoutid) {
+		return usersRepository.findByAccountId(accoutid);
+	}
+	
+	
 }
