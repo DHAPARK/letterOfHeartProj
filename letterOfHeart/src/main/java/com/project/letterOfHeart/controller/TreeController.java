@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TreeController {
 
-	private final TreeService service;
+	private final TreeService treeService;
 
 	@GetMapping("/users/tree")
 	public String myTree() {
