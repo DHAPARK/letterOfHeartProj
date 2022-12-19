@@ -1,5 +1,9 @@
 server:
   port: 9090
+  
+jwt:
+  secret: Y29tLnByb2plY3QubGV0dGVyT2ZIZWFydC5qd3QudGVzdC50b2tlbg== 
+  # com.project.letterOfHeart.jwt.test.token
 
 
 # 로컬 DB
@@ -11,12 +15,12 @@ server:
 #    password: newyear
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 
-#spring:
-#  datasource:
-#    url: jdbc:oracle:thin:@localhost:1521:xe
-#    username: springjpa
-#    password: springjpa
-#    driver-class-name: oracle.jdbc.driver.OracleDriver
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: springjpa
+    password: springjpa
+    driver-class-name: oracle.jdbc.driver.OracleDriver
     
 
 # 원격 DB
@@ -31,12 +35,12 @@ server:
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 
 
-spring:
-  datasource:
-    url: jdbc:oracle:thin:@lohp_high?TNS_ADMIN=./src/main/resources/oracleCloud/Wallet_lohp
-    username: admin
-    password: HappyNewYear2023
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@lohp_high?TNS_ADMIN=./src/main/resources/oracleCloud/Wallet_lohp
+#    username: admin
+#    password: HappyNewYear2023
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
     
     
   jpa:

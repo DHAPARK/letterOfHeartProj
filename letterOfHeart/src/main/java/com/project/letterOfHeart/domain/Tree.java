@@ -36,7 +36,7 @@ public class Tree {
 //    @Column(name = "USER_ID")
 //    private String userid;        // 유저 아이디
     
-    private Long messageCnt;    	// 메세지 개수
+    private int messageCnt;    	// 메세지 개수
     
 	@ManyToOne
 	@JoinColumn(name = "USERS_ID")
