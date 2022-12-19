@@ -1,12 +1,8 @@
 package com.project.letterOfHeart.service;
 
-<<<<<<< HEAD
 import java.util.List;
 
 
-=======
-import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> parent of 74974f6 (기초작업)
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,17 +16,21 @@ import lombok.RequiredArgsConstructor;
 public class MessageService {
 
 	private final MessageRepository messageRepository;
+	
 	@Transactional
 	public void wirte(Message message) {
 		messageRepository.save(message);
 	}
-<<<<<<< HEAD
+	
+	// 해당 아이디 리스트 조회
 	@Transactional(readOnly = true)
 	public List<Message> messageList(Long id){
 		return messageRepository.findByIdList(id);
 	}
 	
+	@Transactional(readOnly = true)
+	public int findAllById(Long id) {
+		return messageRepository.findByIdList(id).size();
+	}
 	
-=======
->>>>>>> parent of 74974f6 (기초작업)
 }

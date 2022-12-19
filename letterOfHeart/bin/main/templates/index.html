@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -194,20 +194,22 @@
                     <div id="chooseForm" onclick="changeAuthStatus();">
                         <button class="chooseBtn">로그인 / 회원가입</button>
                     </div>
-
-                    <div id="loginForm">
-                        <form action="#" method="post">
-                            <label><input class="loginFormEle" type="text" name="id" placeholder="아이디"/></label>
-                            <label><input class="loginFormEle" type="password" name="pw" placeholder="패스워드"/></label>
-                            <label><input type="submit" value="로그인"/></label>
+<!-- 					th:action="@{/users/login/{u_id}(u_id=${loginForm.u_id})}" -->
+<!-- 					th:href="@{/users/login/{u_id}(u_id=${loginForm.u_id})}" -->
+<!-- 					th:onclick="|location.href='@{/users/login/{u_id}(u_id=${loginForm.u_id})}'|" -->
+                   <div id="loginForm">
+                        <form  action="/users/login"  th:object="${loginForm}" method="post">
+                            <label for="accoutid"><input class="loginFormEle" type="text" th:field="*{accoutid}" name="accoutid" placeholder="아이디"/></label>
+                            <label for="password"><input class="loginFormEle" type="password" th:field="*{password}"  name="password" placeholder="패스워드"/></label>
+                            <label><input  type="submit" value="로그인"/></label>
                         </form>
                     </div>
 
                     <div id="registForm">
-                        <form action="" method="post">
-                            <label><input class="registFormEle" type="text" name="id" placeholder="아이디"/></label>
-                            <label><input class="registFormEle" type="password" name="pw" placeholder="패스워드"/></label>
-                            <label><input class="registFormEle" type="text" name="phone" placeholder="휴대폰번호"/></label>
+                        <form action="/users/new" th:object="${usersForm}" method="post">
+                            <label for="accoutid"><input class="registFormEle" type="text" th:field="*{accoutid}" name="accoutid" placeholder="아이디"/></label>
+                            <label for="password"><input class="registFormEle" type="password" th:field="*{password}" name="password" placeholder="패스워드"/></label>
+                            <label for="nickname"><input class="registFormEle" type="text" th:field="*{nickname}" name="nickname" placeholder="닉네임"/></label>
                             <label><input type="submit" value="회원가입"/></label>
                         </form>
                     </div>
