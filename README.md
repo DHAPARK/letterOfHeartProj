@@ -22,5 +22,16 @@
   비밀번호 : newyear  <br>
 - 양방향 매핑까지 완료
 
+##완료
+- 회원가입, 로그인, 로그아웃
+- 메세지 개수 받아오기
+- 메세지 화면출력
+
+## 진행중
+- 페이징처리
+- validation check
+
+
+
 front 12 / 12 : index.html , design.html 틀 잡음. 
 
