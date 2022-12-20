@@ -1,5 +1,7 @@
 package com.project.letterOfHeart.controller;
 
+import static org.assertj.core.api.Assertions.filter;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -43,11 +45,19 @@ import lombok.extern.slf4j.Slf4j;
 public class UsersController {
 
 	private final UsersService usersService;
+
 //	private final UsersToeknService usersToeknService;
 	private final TreeService treeService;
 	private final MessageService messageService;
 	private ResponseCookie cookie;
 //	private final JwtAuthenticationFilter filter;
+/*
+	private final UsersToeknService usersToeknService;
+	private final TreeService treeService;
+	private final MessageService messageService;
+	private ResponseCookie cookie;
+	private final JwtAuthenticationFilter filter;
+*/
 
 	@GetMapping("/")
 	public ModelAndView loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
@@ -71,35 +81,34 @@ public class UsersController {
 
 		redirectAttributes.addAttribute("id", loginUsers.getId());
 		ModelAndView mv = new ModelAndView("redirect:/myTree/{id}");
-
 //		loginToken(form, response);
 //		System.out.println(loginToken(form, response));
 
 		return mv;
 	}
 
-//	public TokenInfo loginToken(@RequestBody LoginForm loginForm, HttpServletResponse response) {
-//
-//		String accoutid = loginForm.getAccoutid();
-//		String password = loginForm.getPassword();
-//		TokenInfo tokenInfo = usersToeknService.login(accoutid, password);
-//
-//		// refrech token 쿠키에 저장
-//		cookie = ResponseCookie.from("refreshToken", tokenInfo.getRefreshToken()).maxAge(7 * 24 * 60 * 60).path("/")
-//				.secure(true).sameSite("None").httpOnly(true).build();
-//		response.setHeader("Set-Cookie", cookie.toString());
-//
-//		cookie = ResponseCookie.from("accessToken", tokenInfo.getAccessToken()).maxAge(20 * 60).path("/").secure(true)
-//				.sameSite("None").httpOnly(true).build();
-//		response.setHeader("Set-Cookie", cookie.toString());
-//
-//		System.out.println("memberLoginRequestDto : " + loginForm.toString());
-//		System.out.println("쿠키 : " + cookie.toString());
-//		System.out.println("access token:" + tokenInfo.getAccessToken());
-//		System.out.println("refresh token:" + tokenInfo.getRefreshToken());
-//
-//		return tokenInfo;
-//	}
+	public TokenInfo loginToken(@RequestBody LoginForm loginForm, HttpServletResponse response) {
+
+		String accoutid = loginForm.getAccoutid();
+		String password = loginForm.getPassword();
+		TokenInfo tokenInfo = usersToeknService.login(accoutid, password);
+
+		// refrech token 쿠키에 저장
+		cookie = ResponseCookie.from("refreshToken", tokenInfo.getRefreshToken()).maxAge(7 * 24 * 60 * 60).path("/")
+				.secure(true).sameSite("None").httpOnly(true).build();
+		response.setHeader("Set-Cookie", cookie.toString());
+
+		cookie = ResponseCookie.from("accessToken", tokenInfo.getAccessToken()).maxAge(20 * 60).path("/").secure(true)
+				.sameSite("None").httpOnly(true).build();
+		response.setHeader("Set-Cookie", cookie.toString());
+
+		System.out.println("memberLoginRequestDto : " + loginForm.toString());
+		System.out.println("쿠키 : " + cookie.toString());
+		System.out.println("access token:" + tokenInfo.getAccessToken());
+		System.out.println("refresh token:" + tokenInfo.getRefreshToken());
+
+		return tokenInfo;
+	}
 
 	@PostMapping("/users/logout")
 	public ModelAndView logout(HttpServletResponse response) {
@@ -119,6 +128,32 @@ public class UsersController {
 		model.addAttribute("id", id);
 		// 해당 id의 메세지 리스트
 		model.addAttribute("messages", messageService.messageList(id));
+		return mv;
+	}
+
+	@GetMapping("/designTree")
+	// public ModelAndView designTree(HttpServletRequest request,
+	// HttpServletResponse response, FilterChain chain) {
+	public ModelAndView designTree(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
+		ModelAndView mv = new ModelAndView("designTree");
+		try {
+			filter.doFilter(request, response, chain);
+			System.out.println(" out? ");
+		} catch (IllegalStateException e) {
+			System.out.println(" ILLEGAL  " + e ) ;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("IOE : " + e);
+
+			e.printStackTrace();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			System.out.println("SERE" + e);
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println(" AllE : " + e);
+			e.printStackTrace();
+		}
 		return mv;
 	}
 
