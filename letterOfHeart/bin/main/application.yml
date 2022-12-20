@@ -23,7 +23,6 @@ spring:
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
-
 # 로컬 DB
 
 #spring:
