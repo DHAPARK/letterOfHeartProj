@@ -23,7 +23,6 @@ INDEX VERSION 1.131+/Users/dohyeonpark/github/letterOfHeartProj/.metadata/.plugi
 2068154939.index
 926508132.index
 3422415964.index
-751462889.index
 493686647.index
 1277618778.index
 184517045.index
