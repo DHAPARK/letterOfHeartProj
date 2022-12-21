@@ -186,6 +186,7 @@ public class UsersController {
 		users.setAccoutid(form.getAccoutid());
 		users.setPassword(form.getPassword());
 		users.setNickname(form.getNickname());
+		users.setPhone(form.getPhone());
 		users.setCreateDate(LocalDateTime.now());
 		// users.setRoles();
 

@@ -17,5 +17,8 @@ public class UsersForm {
 	
 	@NotBlank(message = "회원 닉네임은 필수입니다.")
 	private String nickname;
+	
+	@NotBlank(message = "전화번호는 필수 입력 값입니다.")
+	private String phone;
 	private LocalDateTime createDate;
 }

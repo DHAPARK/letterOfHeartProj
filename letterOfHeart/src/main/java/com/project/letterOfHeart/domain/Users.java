@@ -53,6 +53,9 @@ public class Users implements UserDetails{
     private String nickname;            // 유저 닉네임
     private LocalDateTime createDate;   // 가입 일자
     
+    @Column(unique = true)
+    private String phone;
+    
     @OneToMany(mappedBy = "users")
     private List<Tree> tree = new ArrayList<Tree>();
     

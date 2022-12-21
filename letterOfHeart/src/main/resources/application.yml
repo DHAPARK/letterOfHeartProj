@@ -1,6 +1,11 @@
 server:
   port: 9090
   
+#naver-cloud-sms.accessKey=vQ4Jm2bC5UV0D2hrYKK3
+#naver-cloud-sms.secretKey=lWhTEO5EHRVvwTpaDQC1stD9hbQxxMvsXhmQzPel
+#naver-cloud-sms.serviceId=ncp:sms:kr:298144744141:sms_practice
+#naver-cloud-sms.senderPhone=01035535461  
+    
 jwt:
   secret: Y29tLnByb2plY3QubGV0dGVyT2ZIZWFydC5qd3QudGVzdC50b2tlbg== 
   # com.project.letterOfHeart.jwt.test.token
@@ -11,6 +16,8 @@ spring:
     username: springjpa
     password: springjpa
     driver-class-name: oracle.jdbc.driver.OracleDriver
+  config:
+    import: application.properties
 
   jpa:
     hibernate:

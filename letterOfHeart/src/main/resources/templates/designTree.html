@@ -110,10 +110,10 @@
 
         #treeImg{
             width:100%;
-            height:90%;
+            height:73%;
             border: 1px solid white;
             /*background-image: url("tree1.png");*/
-            background-image: url("/resources/images/tree3.png");
+            background-image: url("tree3.png");
             background-repeat: no-repeat;
             background-size: contain;
             background-position : center;
@@ -261,6 +261,25 @@
             background-color:black;
             display: flex;
         }
+        #chooseDeCo{
+            width:100%;
+            height:10%;
+            background-color:white;
+            display: flex;
+            white-space:nowrap;
+            overflow: auto;
+            margin-top:2%;
+        }
+        #storeBtn{
+            all: unset;
+            width:100%;
+            height:5%;
+            background-color:green;
+            border-radius: 20px;
+            color:white;
+            text-align: center;
+        }
+        
     </style>
 </head>
 <body>
@@ -280,7 +299,8 @@
 
         <div id="contents">
 
-            <div id="treeImg">
+            <div id="treeImg" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <!--
                 <div id="top">
                     <div class="letters top"></div>
                 </div>
@@ -293,6 +313,8 @@
                     <div csplass="letters bottom"></div>
                     <div class="letters bottom"></div>
                 </div>
+                -->
+
                 <!--top middle bottom 끝-->
             </div>
             <!--treeImg 끝-->
@@ -300,13 +322,50 @@
                 
             </div>
             <!--chooseBgImg 끝-->
+            <div id="chooseDeCo">
+                
+            </div>
+            <!--chooseDeCo 끝-->
+
+            <button id="storeBtn" onclick="store();">저장</button>
         </div>
         <!--contents 끝-->
         
     </div>
-
-    <script>
+    
+    
         
+    
+        
+    <script>
+        /**
+         * db로 던질 각 이미지들의 name과 좌표값
+        */
+        const imgRangeSet = [] ;
+
+        /*<!-- drag 관련 js -->*/
+        const allowDrop = (e) => e.preventDefault();
+
+        const drop = (e) => {
+
+            e.preventDefault() ;
+
+            let tg = document.getElementById( e.dataTransfer.getData('text') ) ;
+            
+            
+            e.target.appendChild(tg);
+            
+            tg.style.position = 'fixed';
+            tg.style.left = `${e.clientX - 50}px` ;
+            tg.style.top = `${e.clientY - 50}px` ;
+            
+            console.log(`${tg.src},x:${tg.style.left},y:${tg.style.top}`);
+            
+            imgRangeSet.push( `${tg.src},x:${tg.style.left},y:${tg.style.top}` ) ;
+            
+        }
+        /*<!-- drag 관련 js -->*/
+
         const cBg = document.getElementById("chooseBgImg") ;
         const treeImg = document.getElementById("treeImg") ;
 
@@ -314,13 +373,11 @@
 
             let nDv = document.createElement( "img" );
 
-            nDv.src = `/resources/images/tree${i}.png`;
+            nDv.src = `tree${i}.png`;
 
             nDv.style.width = '100px';
 
             nDv.style.height = '100%';
-
-            nDv.style.backgroundColor = 'yellow';
 
             nDv.style.marginRight = '10px';
 
@@ -333,9 +390,77 @@
             cBg.appendChild( nDv );
 
         }
+
+
+        const cDc = document.getElementById("chooseDeCo") ;
+
+        for ( var i = 1 ; i <= 10 ; i++ ) {
+
+            let nDv = document.createElement( "img" );
+
+            nDv.id = `deco${i}`;
+
+            nDv.src = `deco${i}.png`;
+
+            nDv.style.width = '100px';
+
+            nDv.style.height = '100px';
+
+            nDv.style.borderRadius = '20px';
+
+            nDv.style.position = 'static';
+            
+            nDv.style.marginRight = '10px';
+
+            nDv.draggable = true;
+            
+            nDv.ondragstart = function drag(e){
+                e.dataTransfer.setData('text',e.target.id);
+            }
+
+            cDc.appendChild( nDv );
+
+        }
         
+        $(document).ready(function(){
+            $(document).snowfall({deviceorientation : true, round : true, minSize: 1, maxSize:8,  flakeCount : 100});
+        });
+
+        function store() {
+
+            if ( imgRangeSet.length == 0 ) {
+
+                console.log( `변경사항이 없습니다` ) ;
+
+            } else {
+
+                imgRangeSet.forEach( item =>{
+
+                    console.log( item ) ;
+
+                } ) ;
+
+            }
+
+            if ( treeImg.style.backgroundImage != "" ) {
+
+                console.log( treeImg.style.backgroundImage ) ;
+
+            } else {
+
+                console.log( `DB에 있는 원래 이미지` ) ;
+
+            }
+
+            console.log( imgRangeSet );
+
+        }
 
     </script>
+    <!-- 배치 관련 js -->
+
+    
+    
 </body>
 
 </html>
