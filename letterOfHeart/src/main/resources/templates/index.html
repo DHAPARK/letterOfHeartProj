@@ -171,7 +171,7 @@
         }
         input[type="submit"] {
             all: unset;
-            width: 100%;
+            width: 80%;
             background-color:green;
             font-weight: bold;
             font-size:20px;
@@ -187,7 +187,7 @@
         	width:60% !important;
         	border: 0px;
         }
-        #numberck, s {
+        #numberck, #smsck {
         	width: 17%;
         	background-color:white;
         	border-radius: 5px;
@@ -231,7 +231,7 @@
                             type="password" th:field="*{password}"  name="password" placeholder="패스워드"/>
                             <p class="error-msg" th:if="${valid_password}" th:text="${valid_password}"></p>
                             </label>
-                            <label><input  type="submit" value="로그인"/></label>
+                            <label><input type="submit" value="로그인"/></label>
                         </form>
                     </div>
 
@@ -256,7 +256,9 @@
 		                    <label for="authnumber">
 		                        <input class="registFormEle registFormElePhone" id="authnumber" type="hidden" placeholder="인증번호를 입력해주세요." required>
 		                        <input id="smsck" type="hidden" value="인증">
-		                        <div id="numbermsg"></div>
+                            </label>
+                            <label>
+                            	<p id="numbermsg"></p>
                             </label>
                             <label><input type="submit" value="회원가입"/></label>
                         </form>
