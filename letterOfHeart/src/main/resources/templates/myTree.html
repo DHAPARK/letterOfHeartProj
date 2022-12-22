@@ -351,12 +351,12 @@
 <!--         th:field="*{titleNickname}"                        th:object="messageForm" -->
 								
                                 <form id="writeLetterForm" action="/message/write"  method="post"  name="writeLetterForm">
-                                    <label class="formInnerEle">작성자 : <input id="titleNickname"   type="text" name="titleNickname" placeholder="닉네임 8자리까지 입력해주세요."/>
+                                    <label class="formInnerEle">작성자 : <input id="titleNickname"   type="text" name="titleNickname" placeholder="닉네임은 2자 이상, 8자 이하로 입력해주세요."/>
                                    	<p class="error-msg" th:if="${valid_titleNickname}" th:text="${valid_titleNickname}"></p>
                                     </label>
                                     
                                     
-                                    <label class="formInnerEle textarea"><textarea id="content" name="content" placeholder="내용은 850자리까지 입력해주세요."></textarea>
+                                    <label class="formInnerEle textarea"><textarea id="content" name="content" placeholder="편지 내용은 10자 이상, 200자 이하로 작성해주세요."></textarea>
                                     <p class="error-msg" th:if="${valid_content}" th:text="${valid_content}"></p>
                                     </label>
                                    

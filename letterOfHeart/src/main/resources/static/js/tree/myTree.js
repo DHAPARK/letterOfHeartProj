@@ -34,7 +34,7 @@ function send() {
 	}
 	
 	if (form.content.value.length < 10 || form.content.value.length > 200) {
-		alert("닉네임은 10자 이상, 200자 이하로 입력해주세요.");
+		alert("편지 내용은 10자 이상, 200자 이하로 작성해주세요.");
 		form.content.focus();
 		return false;
 	} else {
