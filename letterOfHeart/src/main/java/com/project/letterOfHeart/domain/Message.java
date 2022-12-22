@@ -38,14 +38,18 @@ public class Message {
     
 //    private String u_Id;                // 수신인 아이디
     
-    @Column(length = 8)
+//    @Column(length = 8)
     private String titleNickname;    	// 작성자 닉네임
     
-    @Column(length = 850)
+//    @Column(length = 850)
     private String content;             // 내용
+    
+    
     private LocalDateTime sendDate;     // 작성 일자
     private LocalDateTime openDate;     // 확인 가능 일자
     private Long status;            	// 0 - 미확인, 1 - 확인
+    
+    
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private Users users;
