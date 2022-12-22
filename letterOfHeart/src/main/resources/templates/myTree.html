@@ -111,16 +111,15 @@
             }
         }
 
-        #treeImg{
+		#treeImg{
             width:100%;
             height:90%;
             border: 1px solid white;
-            /*background-image: url("tree1.png");*/
-            background-image: url("/resources/images/tree3.png");
             background-repeat: no-repeat;
             background-size: contain;
             background-position : center;
         }
+        
         #top{
             width:30%;
             height:25%;
@@ -282,6 +281,13 @@
         <!--
             눈실험
         -->
+        
+        <!-- 임시 트리디자인 버튼 -->
+		<div>
+			<button th:onclick="|location.href='@{/{id}/edit(id=${id})}'|">트리꾸미기</button>		
+		</div>
+		
+		
 		<table style="position:absolute" class="table">
          <thead>
             <tr style="color: white;">
@@ -305,7 +311,7 @@
       </table>
 
         <div id="contents">
-            <div id="treeImg">
+            <div id="treeImg" th:style="|background-image: url(/resources/images/tree${treeDesign}.png)|">
                 <div id="top">
                     <div class="letters top">
                         <img class="lettersImg" src="/resources/images/letterImg1.png"/>
@@ -348,16 +354,13 @@
                         <div class="popup">
                             <div id="twoBtns">
                                 <button class="twoBtnsInnerBtn"  id="writeLetterBtn" type="button"  onclick="openWriteLetterPaper();">편지쓰기</button>
-<!--         th:field="*{titleNickname}"                        th:object="messageForm" -->
 								
                                 <form id="writeLetterForm" action="/message/write"  method="post"  name="writeLetterForm">
                                     <label class="formInnerEle">작성자 : <input id="titleNickname"   type="text" name="titleNickname" placeholder="닉네임은 2자 이상, 8자 이하로 입력해주세요."/>
-                                   	<p class="error-msg" th:if="${valid_titleNickname}" th:text="${valid_titleNickname}"></p>
                                     </label>
                                     
                                     
                                     <label class="formInnerEle textarea"><textarea id="content" name="content" placeholder="편지 내용은 10자 이상, 200자 이하로 작성해주세요."></textarea>
-                                    <p class="error-msg" th:if="${valid_content}" th:text="${valid_content}"></p>
                                     </label>
                                    
                                    
@@ -394,33 +397,6 @@
 
 
     <script>
-
-//         let success = "[[${fail}]]";
-//         if(success == "400"){
-//         	openWriteLetterPaper();
-//         }
-    
-//         $(document).ready(function() {
-//             let message = "[[${mMsg}]]";
-//             if (message != "") {
-//                 alert(message);
-//             }else {
-//             }
-//         })
-    
-//          function validation(){
-
-//          let frm = document.getElementById('writeLetterForm');
-
-//          let sId = frm.titleNickname;
-
-//          if(sId.value == ""){
-
-//              alert("제목 이름을 입력하세요.");
-
-//              return false;
-
-//          }
          
         let Flag = false;
 

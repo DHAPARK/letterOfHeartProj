@@ -40,9 +40,6 @@ function send() {
 	} else {
 		check = true;
 	}
-	
-	
-
 
 	form.submit();
 }

@@ -11,11 +11,11 @@ import lombok.Setter;
 public class MessageForm {
 	private Long id; 	// 유저 PK
 	
-//	@NotBlank(message 	= "닉네임은 필수입니다.")
+	@NotBlank(message 	= "닉네임은 필수입니다.")
 //	@Size(min = 2, max = 8, message = "이름을 2~8자 사이로 입력해주세요.")
     private String titleNickname;
 	
-//	@NotBlank(message 	= "편지 내용은 필수입니다.")
+	@NotBlank(message 	= "편지 내용은 필수입니다.")
 //	@Size(min = 2, max = 850, message = "내용을 2~850자 사이로 입력해주세요.")
     private String content;
 
