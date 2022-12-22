@@ -46,7 +46,7 @@ public class Users implements UserDetails{
     @Column(name = "USERS_ID")
     private Long id;
 
-    private String accoutid;                // 유저 아이디
+    private String accountId;                // 유저 아이디
     private String password;            // 유저 비밀번호
     
     @Column(length = 8)
@@ -66,20 +66,24 @@ public class Users implements UserDetails{
     }
     
 	// 유저 상태
-	@ElementCollection(fetch = FetchType.EAGER)
-	@Builder.Default
-	private List<String> roles = new ArrayList<>();
+	private String role;
 	  
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-	    return this.roles.stream()
-             .map(SimpleGrantedAuthority::new)
-             .collect(Collectors.toList());
+	    Collection<GrantedAuthority> collect = new ArrayList<GrantedAuthority>();
+	    collect.add(new GrantedAuthority() {
+			
+			@Override
+			public String getAuthority() {
+				return role;
+			}
+		});
+	    return collect;
 	}
 	  
 	@Override
 	public String getUsername() {
-		return accoutid;
+		return accountId;
 	}
 
 	@Override

@@ -9,5 +9,5 @@ import com.project.letterOfHeart.domain.Users;
 
 @Repository
 public interface repository extends JpaRepository<Users, Long>{
-	Optional<Users> findByAccoutid(String accoutid);
+	Optional<Users> findByAccountId(String accountId);
 }

@@ -32,10 +32,10 @@ public class UsersService {
 	}
 	
 	// 로그인
-	public Users login(String accoutid, String password) {
+	public Users login(String accountId, String password) {
 		
-		Users users = usersRepository.findByAccountsId(accoutid);
-		if(users != null && users.getUsername().equals(accoutid)
+		Users users = usersRepository.findByAccountsId(accountId);
+		if(users != null && users.getUsername().equals(accountId)
 				&& users.getPassword().equals(password)) {
 			// 로그인 성공
 			return users;
@@ -50,8 +50,8 @@ public class UsersService {
 		return usersRepository.findOne(id);
 	}
 	// 로그인 id 조회
-	public Users findById(String accoutid) {
-		return usersRepository.findByAccountId(accoutid);
+	public Users findById(String accountId) {
+		return usersRepository.findByAccountId(accountId);
 	}
 
 	/* 회원가입 시, 유효성 체크 */
@@ -70,9 +70,9 @@ public class UsersService {
 
     
     /* 회원가입 시, 아이디 중복 체크 */
-	public Users join(String accoutid) {
+	public Users join(String accountId) {
 		
-		Users users = usersRepository.findByAccountsId(accoutid);
+		Users users = usersRepository.findByAccountsId(accountId);
 		if(users == null ) {
 			System.out.println("검증성공===================ㄴ");
 			// 아이디 체크 성공

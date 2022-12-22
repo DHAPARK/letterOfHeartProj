@@ -12,6 +12,6 @@ import lombok.Setter;
 public class UsersRolesForm {
 
 	@NotEmpty(message = "회원 아이디는 필수입니다.")
-	private String accoutid;
+	private String accountId;
 	private String password;
 }

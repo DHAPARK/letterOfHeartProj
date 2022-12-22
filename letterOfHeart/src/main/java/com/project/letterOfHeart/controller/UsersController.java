@@ -37,7 +37,7 @@ import com.project.letterOfHeart.dto.MessageForm;
 import com.project.letterOfHeart.dto.UsersForm;
 import com.project.letterOfHeart.jwt.JwtAuthenticationFilter;
 import com.project.letterOfHeart.jwt.TokenInfo;
-import com.project.letterOfHeart.service.UsersToeknService;
+import com.project.letterOfHeart.service.UsersTokenService;
 import com.project.letterOfHeart.service.MessageService;
 import com.project.letterOfHeart.service.PageService;
 import com.project.letterOfHeart.service.TreeService;
@@ -53,7 +53,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UsersController {
 
 	private final UsersService usersService;
-	private final UsersToeknService usersToeknService;
+	private final UsersTokenService usersTokenService;
 	private final TreeService treeService;
 	private final PageService pageService;
 	private final MessageService messageService;
@@ -93,7 +93,7 @@ public class UsersController {
 			return new ModelAndView("/index");
 		}
 		
-		Users loginUsers = usersService.login(form.getAccoutid(), form.getPassword());
+		Users loginUsers = usersService.login(form.getAccountId(), form.getPassword());
 		if(loginUsers == null) {
 			// 로그인 실패
 			model.addAttribute("loginMsg", "로그인 실패!!!!!!!!");
@@ -114,9 +114,9 @@ public class UsersController {
 
 	public TokenInfo loginToken(@RequestBody LoginForm loginForm, HttpServletResponse response) {
 
-		String accoutid = loginForm.getAccoutid();
+		String accoutid = loginForm.getAccountId();
 		String password = loginForm.getPassword();
-		TokenInfo tokenInfo = usersToeknService.login(accoutid, password);
+		TokenInfo tokenInfo = usersTokenService.login(accoutid, password);
 
 		// refrech token 쿠키에 저장
 		cookie = ResponseCookie.from("refreshToken", tokenInfo.getRefreshToken()).maxAge(7 * 24 * 60 * 60).path("/")
@@ -229,7 +229,7 @@ public class UsersController {
 		}
 		
 		// 회원가입 아이디 중복 체크
-		Users joinUsers = usersService.join(form.getAccoutid());
+		Users joinUsers = usersService.join(form.getAccountId());
 		if(joinUsers != null) {
 			// 실패
 			model.addAttribute("msgg", "아이디 중복, 회원가입 실패!!");
@@ -241,11 +241,11 @@ public class UsersController {
 		
 		// 정상 로직, service
 		Users users = new Users();
-		users.setAccoutid(form.getAccoutid());
+		users.setAccountId(form.getAccountId());
 		users.setPassword(form.getPassword());
 		users.setNickname(form.getNickname());
 		users.setCreateDate(LocalDateTime.now());
-		// users.setRoles();
+		users.setRole("USER");
 
 		// tree
 		Tree tree = new Tree();
