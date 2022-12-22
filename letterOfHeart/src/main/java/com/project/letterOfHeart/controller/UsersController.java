@@ -1,8 +1,9 @@
-package com.project.letterOfHeart.controller;
+		package com.project.letterOfHeart.controller;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,10 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +33,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.project.letterOfHeart.domain.Tree;
 import com.project.letterOfHeart.domain.Users;
 import com.project.letterOfHeart.dto.LoginForm;
+import com.project.letterOfHeart.dto.MessageForm;
 import com.project.letterOfHeart.dto.UsersForm;
 import com.project.letterOfHeart.jwt.JwtAuthenticationFilter;
 import com.project.letterOfHeart.jwt.TokenInfo;
 import com.project.letterOfHeart.service.UsersToeknService;
 import com.project.letterOfHeart.service.MessageService;
+import com.project.letterOfHeart.service.PageService;
 import com.project.letterOfHeart.service.TreeService;
 import com.project.letterOfHeart.service.UsersService;
 
@@ -48,6 +55,7 @@ public class UsersController {
 	private final UsersService usersService;
 	private final UsersToeknService usersToeknService;
 	private final TreeService treeService;
+	private final PageService pageService;
 	private final MessageService messageService;
 	private ResponseCookie cookie;
 	private final JwtAuthenticationFilter filter;
@@ -67,14 +75,34 @@ public class UsersController {
 	}
 
 	@PostMapping("/users/login")
-	public ModelAndView login(@ModelAttribute LoginForm form, Model model, RedirectAttributes redirectAttributes,
-			HttpServletResponse response) {
+	public ModelAndView login(UsersForm usersForm, @Valid LoginForm form, Errors errors, Model model,
+			RedirectAttributes redirectAttributes, HttpServletResponse response, MessageForm messageForm) {
 
-		Users loginUsers = usersService.login(form.getAccoutid(), form.getPassword());
-
-		redirectAttributes.addAttribute("id", loginUsers.getId());
 		ModelAndView mv = new ModelAndView("redirect:/myTree/{id}");
 
+		/* post요청시 넘어온 user 입력값에서 Validation에 걸리는 경우 */
+		if (errors.hasErrors()) {
+			model.addAttribute("LoginForm", form);
+			Map<String, String> validateResult = usersService.validateHandler(errors);
+			for (String key : validateResult.keySet()) {
+				model.addAttribute(key, validateResult.get(key));
+			}
+			model.addAttribute("loginMsg", "로그인 실패!!!!!!!!");
+			return new ModelAndView("/index");
+		}
+		
+		Users loginUsers = usersService.login(form.getAccoutid(), form.getPassword());
+		if(loginUsers == null) {
+			// 로그인 실패
+			model.addAttribute("loginMsg", "로그인 실패!!!!!!!!");
+			return new ModelAndView("/index");
+		}
+		
+		model.addAttribute("id", loginUsers.getId());
+		redirectAttributes.addAttribute("id", loginUsers.getId());
+		
+		model.addAttribute("messageForm",messageForm);
+		
 		loginToken(form, response);
 
 		System.out.println(loginToken(form, response));
@@ -117,15 +145,24 @@ public class UsersController {
 	}
 
 	@GetMapping("/myTree/{id}")
-	public ModelAndView getId(Model model, @PathVariable("id") long id) {
-		ModelAndView mv = new ModelAndView("myTree");
-		model.addAttribute("userForm", new UsersForm());
-		model.addAttribute("id", id);
-		// 해당 id의 메세지 리스트
-		model.addAttribute("messages", messageService.messageList(id));
-		// 메세지 개수
-		model.addAttribute("msgCnt", messageService.findAllById(id));
-		return mv;
+	   public ModelAndView getId(Model model, @PathVariable("id") long id,
+	                        // 페이징 처리
+	                        @PageableDefault(sort = "id", direction = Direction.ASC, size = 2)Pageable pageable) {
+	      ModelAndView mv = new ModelAndView("myTree");
+	      model.addAttribute("userForm", new UsersForm());
+	      model.addAttribute("id", id);
+	      // 해당 id의 메세지 리스트
+	      model.addAttribute("messages", messageService.messageList(id));
+	      // 메세지 개수
+	      model.addAttribute("msgCnt", messageService.findAllById(id));
+	      // 페이징 처리
+	      model.addAttribute("pages", pageService.pageList(pageable,id));
+	      System.out.println("page : " + pageService.pageList(pageable,id));
+	      model.addAttribute("previous",pageable.previousOrFirst().getPageNumber());
+	      System.out.println("previous : "+ pageable.previousOrFirst().getPageNumber());
+	      model.addAttribute("next", pageable.next().getPageNumber());
+	      System.out.println("next : " + pageable.next().getPageNumber());
+	      return mv;
 	}
 
 	@GetMapping("/designTree")
@@ -156,22 +193,47 @@ public class UsersController {
 
 	// 회원가입
 	@PostMapping("/users/new")
-	public ModelAndView create(@Valid UsersForm form, BindingResult result) {
+	public ModelAndView create(LoginForm loginForm, @Valid UsersForm form,
+			Errors errors, Model model) {
 
 		ModelAndView mv = new ModelAndView("redirect:/");
-		// error 발생 시
-		if (result.hasErrors()) {
-			return mv = new ModelAndView("index");
-		}
 
+
+		if (errors.hasErrors()) {
+			/* 회원가입 실패시 입력 데이터 유지 */
+			model.addAttribute("usersForm", form);
+			/* 회원가입 실패시 message 값들을 모델에 매핑해서 View로 전달 */
+			Map<String, String> validateResult = usersService.validateHandler(errors);
+			// map.keySet() -> 모든 key값을 갖고온다.
+			// 그 갖고온 키로 반복문을 통해 키와 에러 메세지로 매핑
+			for (String key : validateResult.keySet()) {
+				// ex) model.addAtrribute("valid_id", "아이디는 필수 입력사항 입니다.")
+				model.addAttribute(key, validateResult.get(key));
+			}
+			model.addAttribute("msg", "회원가입 실패!!!!!!!!");
+			model.addAttribute("success", "400");
+			
+			return new ModelAndView("/index");
+		}
+		
+		// 회원가입 아이디 중복 체크
+		Users joinUsers = usersService.join(form.getAccoutid());
+		if(joinUsers != null) {
+			// 실패
+			model.addAttribute("msgg", "아이디 중복, 회원가입 실패!!");
+			model.addAttribute("success", "400");
+			return new ModelAndView("/index") ;
+		}
+		
+//		redirectAttributes.addAttribute("id", joinUsers.getId());
+		
 		// 정상 로직, service
 		Users users = new Users();
 		users.setAccoutid(form.getAccoutid());
 		users.setPassword(form.getPassword());
 		users.setNickname(form.getNickname());
-		users.setPhone(form.getPhone());
 		users.setCreateDate(LocalDateTime.now());
-//		users.setRoles();
+		// users.setRoles();
 
 		// tree
 		Tree tree = new Tree();

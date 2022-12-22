@@ -68,6 +68,18 @@ public class UsersService {
         return validateResult;
     }
 
-	
+    
+    /* 회원가입 시, 아이디 중복 체크 */
+	public Users join(String accoutid) {
+		
+		Users users = usersRepository.findByAccountsId(accoutid);
+		if(users == null ) {
+			System.out.println("검증성공===================ㄴ");
+			// 아이디 체크 성공
+			return null;
+		}
+		System.out.println("검증실패===================ㄴ");
+		return users;
+	}
 	
 }

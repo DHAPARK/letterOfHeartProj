@@ -1,10 +1,12 @@
 package com.project.letterOfHeart.service;
-
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
 import com.project.letterOfHeart.domain.Message;
 import com.project.letterOfHeart.repository.MessageRepository;
@@ -32,5 +34,18 @@ public class MessageService {
 	public int findAllById(Long id) {
 		return messageRepository.findByIdList(id).size();
 	}
-	
+
+    public Map<String, String> validateHandler(Errors errors) {
+        Map<String, String> validateResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = "valid_" + error.getField();
+            validateResult.put(validKeyName, error.getDefaultMessage());
+        }
+
+
+        return validateResult;
+    }
+
+
 }

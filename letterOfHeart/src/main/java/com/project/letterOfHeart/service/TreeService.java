@@ -30,9 +30,6 @@ public class TreeService {
 	// 메세지 작성 후, 트리테이블에 메세지 카운트 증가
 	@Transactional
 	public void updateTree(Long id, int count) {
-		if(id == null) {
-			
-		}
 		Tree tree = treeRepository.findOne(id);
 		tree.setMessageCnt(count);
 		

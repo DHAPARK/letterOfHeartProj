@@ -38,9 +38,14 @@ public class Tree {
     
     private int messageCnt;    	// 메세지 개수
     
+    
+    private String treeDesign;	// 트리 디자인
+    
+    
 	@ManyToOne
 	@JoinColumn(name = "USERS_ID")
 	private Users users;
+	
 	
 	@OneToMany(mappedBy = "tree")
 	private List<Message> messages = new ArrayList<Message>();

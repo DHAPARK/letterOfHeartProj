@@ -280,21 +280,26 @@
             눈실험
         -->
 		<table style="position:absolute" class="table">
-			<thead>
-				<tr style="color: white;">
-					<th>작성자</th>
-					<th>메세지</th>
-				</tr>
-			</thead>
-			<tbody style="color: white;">
-			<p style="color: white;">메세지 개수</p>
-			<p th:text="${msgCnt}" style="color: white;"></p>
-				<tr th:each="message:${messages}">
-					<td th:text="${message.titleNickname}" ></td>
-					<td th:text="${message.content}" ></td>
-				</tr>
-			</tbody>
-		</table>
+         <thead>
+            <tr style="color: white;">
+               <th>작성자</th>
+               <th>메세지</th>
+            </tr>
+         </thead>
+         <tbody style="color: white;">
+         <p style="color: white;">메세지 개수</p>
+         <p th:text="${msgCnt}" style="color: white;"></p>
+            <tr th:each="page:${pages}">
+               <td th:text="${page.titleNickname}" ></td>
+               <td th:text="${page.content}" ></td>
+            </tr>
+         </tbody>
+          
+      	<div>
+           <a th:href="|?page=${previous}|" role="button">이전</a>
+           <a th:href="|?page=${next}|" role="button" >다음</a>
+       </div>
+      </table>
 
         <div id="contents">
             <div id="treeImg">
@@ -339,11 +344,20 @@
                     <div class="window">
                         <div class="popup">
                             <div id="twoBtns">
-                                <button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button"  onclick="openWriteLetterPaper();">편지쓰기</button>
-                                
-                                <form id="writeLetterForm" action="/message/write"   method="post"  name="writeLetterForm">
-                                    <label class="formInnerEle">작성자 : <input  id="titleNickname" type="text" name="titleNickname"/></label>
-                                    <label class="formInnerEle textarea"><textarea id="content" name="content"></textarea></label>
+                                <button class="twoBtnsInnerBtn"  id="writeLetterBtn" type="button"  onclick="openWriteLetterPaper();">편지쓰기</button>
+<!--         th:field="*{titleNickname}"                        th:object="messageForm" -->
+								
+                                <form id="writeLetterForm" action="/message/write"  method="post"  name="writeLetterForm">
+                                    <label class="formInnerEle">작성자 : <input id="titleNickname"   type="text" name="titleNickname" placeholder="닉네임 8자리까지 입력해주세요."/>
+                                   	<p class="error-msg" th:if="${valid_titleNickname}" th:text="${valid_titleNickname}"></p>
+                                    </label>
+                                    
+                                    
+                                    <label class="formInnerEle textarea"><textarea id="content" name="content" placeholder="내용은 850자리까지 입력해주세요."></textarea>
+                                    <p class="error-msg" th:if="${valid_content}" th:text="${valid_content}"></p>
+                                    </label>
+                                   
+                                   
                                     <label class="formInnerEle"><input  id="sendLetterBtn"  type="submit" value="전송"/></label>
                                     <input type="hidden" th:value="${id}" id="id" name="id" >
                                 </form>
@@ -366,17 +380,45 @@
                         <div >
                             <div></div>
                         </div>
-                    </div>
+                    </div>	
                     <!-- window 끝 -->
                 </div>
                 <!--실험 background 끝-->
             <!--modalBtn 끝-->
         </div>
         <!--contents 끝-->
-        
     </div>
 
+
     <script>
+
+//         let success = "[[${fail}]]";
+//         if(success == "400"){
+//         	openWriteLetterPaper();
+//         }
+    
+//         $(document).ready(function() {
+//             let message = "[[${mMsg}]]";
+//             if (message != "") {
+//                 alert(message);
+//             }else {
+//             }
+//         })
+    
+//          function validation(){
+
+//          let frm = document.getElementById('writeLetterForm');
+
+//          let sId = frm.titleNickname;
+
+//          if(sId.value == ""){
+
+//              alert("제목 이름을 입력하세요.");
+
+//              return false;
+
+//          }
+         
         let Flag = false;
 
         function show() {
