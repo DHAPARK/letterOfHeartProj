@@ -3,6 +3,9 @@ src/main/resources/oracleCloud/Wallet_lohp/
 *.pem
 
 
+src/main/resources/application.properties
+
+
 /.metadata/
 
 
