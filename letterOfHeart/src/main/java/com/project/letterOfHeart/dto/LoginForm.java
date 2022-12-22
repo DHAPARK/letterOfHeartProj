@@ -1,12 +1,14 @@
 package com.project.letterOfHeart.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class LoginForm {
-	private Long id;
+	@NotBlank(message = "* 아이디를 입력해주세요.")
 	private String accoutid;
+
+	@NotBlank(message = "* 비밀번호를 입력해주세요.")
 	private String password;
 }

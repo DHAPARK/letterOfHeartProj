@@ -39,7 +39,7 @@ public class Tree {
     private int messageCnt;    	// 메세지 개수
     
     
-    private String treeDesign;	// 트리 디자인
+    private int treeDesign;	// 트리 디자인
     
     
 	@ManyToOne
@@ -54,6 +54,7 @@ public class Tree {
 		message.setTree(this);
 		this.messages.add(message);
 	}
+
 	
 	
 }

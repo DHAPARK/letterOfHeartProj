@@ -251,6 +251,7 @@
                             </label>
                             <label for="phone">
                             	<input class="registFormEle registFormElePhone" id="phone" name="phone" type="text" th:field="*{phone}" placeholder="(-)제외한 휴대폰번호" required>
+		                        <p class="error-msg" th:if="${valid_phone}" th:text="${valid_phone}"></p>
 		                        <input id="numberck" type="button" value="전송">
 		                    </label>
 		                    <label for="authnumber">
@@ -276,7 +277,13 @@
     <!-- container 끝 -->
     <script>
   		
-       
+    	// 회원가입 폼으로 돌아가기
+	    let success = "[[${success}]]";
+	    if(success == "400"){
+	    	changeAuthStatus();
+	    }
+	    
+    	// 회원가입 실패 alert창
     	var Flag = false;
         $(document).ready(function() {
             let message = "[[${msg}]]";

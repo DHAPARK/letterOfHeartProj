@@ -67,6 +67,7 @@ public class UsersController {
 		return mv;
 	}
 
+	
 	@GetMapping("/users/login")
 	public ModelAndView loginForm(LoginForm loginForm, Model model) {
 		ModelAndView mv = new ModelAndView("myTree");
@@ -74,6 +75,7 @@ public class UsersController {
 		return mv;
 	}
 
+	
 	@PostMapping("/users/login")
 	public ModelAndView login(UsersForm usersForm, @Valid LoginForm form, Errors errors, Model model,
 			RedirectAttributes redirectAttributes, HttpServletResponse response, MessageForm messageForm) {
@@ -149,6 +151,12 @@ public class UsersController {
 	                        // 페이징 처리
 	                        @PageableDefault(sort = "id", direction = Direction.ASC, size = 2)Pageable pageable) {
 	      ModelAndView mv = new ModelAndView("myTree");
+	      
+	      Users loginUsers = new Users();
+	      // 로그인 후 트리이미지 반환
+		  Tree tree = treeService.findOne(id);
+		  loginUsers.addTree(tree);
+		  
 	      model.addAttribute("userForm", new UsersForm());
 	      model.addAttribute("id", id);
 	      // 해당 id의 메세지 리스트
@@ -162,6 +170,10 @@ public class UsersController {
 	      System.out.println("previous : "+ pageable.previousOrFirst().getPageNumber());
 	      model.addAttribute("next", pageable.next().getPageNumber());
 	      System.out.println("next : " + pageable.next().getPageNumber());
+	      
+	      // 디자인트리
+	      model.addAttribute("treeDesign", tree.getTreeDesign());
+		  System.out.println("트리디자인 : " + tree.getTreeDesign() );
 	      return mv;
 	}
 
@@ -240,7 +252,8 @@ public class UsersController {
 		users.addTree(tree);
 		tree.setId(users.getId());
 		tree.setMessageCnt(0);
-
+		tree.setTreeDesign(1);
+		
 		// 회원가입
 		usersService.join(users);
 		// 트리 생성

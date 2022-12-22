@@ -33,7 +33,7 @@ public class MessageController {
 
 	@GetMapping("/message/write")
 	public String messageForm( Model model, MessageForm messageForm) {
-		model.addAttribute("messageForm", new MessageForm());
+		model.addAttribute("messageForm", messageForm);
 		return "redirect:/myTree/"+ messageForm.getId();
 	}
 	
@@ -47,9 +47,9 @@ public class MessageController {
 		Tree tree = treeService.findOne(messageForm.getId());
 
 		if (errors.hasErrors()) {
-			/* 회원가입 실패시 입력 데이터 유지 */
+			/*  실패시 입력 데이터 유지 */
 			model.addAttribute("messageForm", messageForm);
-			/* 회원가입 실패시 message 값들을 모델에 매핑해서 View로 전달 */
+			/* 실패시 message 값들을 모델에 매핑해서 View로 전달 */
 			Map<String, String> validateResult = messageService.validateHandler(errors);
 			// map.keySet() -> 모든 key값을 갖고온다.
 			// 그 갖고온 키로 반복문을 통해 키와 에러 메세지로 매핑
@@ -58,9 +58,7 @@ public class MessageController {
 				model.addAttribute(key, validateResult.get(key));
 			}
 			
-			model.addAttribute("mMsg","오류!!!!!!!!!!");
-			model.addAttribute("fail","400");
-			return "/index" ;
+			return "/redirect:/myTree/"+messageForm.getId();
 		}
 
 		LocalDateTime opendate = LocalDateTime.parse("2022-12-25T00:00:00.000");
@@ -76,7 +74,6 @@ public class MessageController {
 		message.setTree(tree);
 		messageService.wirte(message);
 		
-		model.addAttribute("messageForm", messageForm.getTitleNickname());
 		
 		int messageCnt = messageService.findAllById(messageForm.getId());
 		treeService.updateTree(messageForm.getId(), messageCnt);
