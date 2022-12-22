@@ -220,10 +220,10 @@
                    <div id="loginForm">
                         <form  action="/users/login"  th:object="${loginForm}" method="post">
                             
-                            <label for="accoutid">
+                            <label for="accountId">
                             <input class="loginFormEle"  
-                            type="text" th:field="*{accoutid}" name="accoutid" placeholder="아이디"/>
-                             <p class="error-msg" th:if="${valid_accoutid}" th:text="${valid_accoutid}"></p>
+                            type="text" th:field="*{accountId}" name="accountId" placeholder="아이디"/>
+                             <p class="error-msg" th:if="${valid_accountId}" th:text="${valid_accountId}"></p>
 							</label>
                            
                             <label for="password">
@@ -237,9 +237,9 @@
 
                    <div id="registForm">
                         <form action="/users/new" th:object="${usersForm}" method="post">
-                            <label for="accoutid">
-                               <input class="registFormEle" type="text" th:field="*{accoutid}" name="accoutid" placeholder="아이디"/>
-                               <p class="error-msg" th:if="${valid_accoutid}" th:text="${valid_accoutid}"></p>
+                            <label for="accountId">
+                               <input class="registFormEle" type="text" th:field="*{accountId}" name="accountId" placeholder="아이디"/>
+                               <p class="error-msg" th:if="${valid_accountId}" th:text="${valid_accountId}"></p>
                             </label>
                             <label for="password">
                                <input class="registFormEle" type="password" th:field="*{password}" name="password" placeholder="패스워드"/>
@@ -251,8 +251,8 @@
                             </label>
                             <label for="phone">
                             	<input class="registFormEle registFormElePhone" id="phone" name="phone" type="text" th:field="*{phone}" placeholder="(-)제외한 휴대폰번호" required>
-		                        <p class="error-msg" th:if="${valid_phone}" th:text="${valid_phone}"></p>
 		                        <input id="numberck" type="button" value="전송">
+		                        <p class="error-msg" th:if="${valid_phone}" th:text="${valid_phone}"></p>
 		                    </label>
 		                    <label for="authnumber">
 		                        <input class="registFormEle registFormElePhone" id="authnumber" type="hidden" placeholder="인증번호를 입력해주세요." required>

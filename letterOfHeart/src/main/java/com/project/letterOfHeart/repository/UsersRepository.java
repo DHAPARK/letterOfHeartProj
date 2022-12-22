@@ -35,21 +35,21 @@ public class UsersRepository {
 	}
 	
 	// 아이디로 조회 
-	public List<Users> findById(String accoutid){
-		return em.createQuery("select u from Users u where u.accoutid = :accoutid", Users.class)
-				 .setParameter("accoutid", accoutid).getResultList();
+	public List<Users> findById(String accountId){
+		return em.createQuery("select u from Users u where u.accountId = :accountId", Users.class)
+				 .setParameter("accountId", accountId).getResultList();
 	}
 	
-	public Users findByAccountId(String accoutid) {
-		return em.find(Users.class, accoutid);
+	public Users findByAccountId(String accountId) {
+		return em.find(Users.class, accountId);
 	}
 	
 	// 로그인 아이디 체크
-	public Users findByAccountsId(String accoutid){
+	public Users findByAccountsId(String accountId){
 		List<Users> all = findAll();
 		
 		for(Users u : all) {
-			if(u.getAccoutid().equals(accoutid)) {
+			if(u.getAccountId().equals(accountId)) {
 				return u;
 			}
 		}

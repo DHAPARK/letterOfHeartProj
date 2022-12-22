@@ -22,8 +22,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
  
     @Override
-    public UserDetails loadUserByUsername(String accoutid) throws UsernameNotFoundException {
-    	return repository.findByAccoutid(accoutid)
+    public UserDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {
+    	return repository.findByAccountId(accountId)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
     	
@@ -32,9 +32,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(Users user) {
         return User.builder()
-                .username(user.getAccoutid())
+                .username(user.getAccountId())
                 .password(passwordEncoder.encode(user.getPassword()))
-                .roles(user.getRoles().toArray(new String[0]))
+                .roles(user.getRole())
                 .build();
     }
 }

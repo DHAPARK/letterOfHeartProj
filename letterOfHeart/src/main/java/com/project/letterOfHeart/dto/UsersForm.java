@@ -3,6 +3,7 @@ package com.project.letterOfHeart.dto;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import lombok.Data;
@@ -13,7 +14,7 @@ public class UsersForm {
 	
 	@NotBlank(message = "회원 아이디는 필수입니다.")	
 //	@Pattern(regexp = "^[a-z0-9]{4,20}$", message = "아이디는 영어 소문자와 숫자만 사용하여 4~20자리여야 합니다.")
-	private String accoutid;
+	private String accountId;
 	
 	@NotBlank(message = "회원 비밀번호는 필수입니다.")
 //	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$"
@@ -24,7 +25,8 @@ public class UsersForm {
 //    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,8}$", message = "닉네임은 특수문자를 제외한 2~8자리여야 합니다.")
 	private String nickname;
 	
-	@Pattern(regexp = "(\\\\d{3})(\\\\d{3,4})(\\\\d{4})", message = "휴대폰번호 8자리를 입력해주세요")
+	@NotNull
+	@Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
 	private String phone;
 	private LocalDateTime createDate;
 }
