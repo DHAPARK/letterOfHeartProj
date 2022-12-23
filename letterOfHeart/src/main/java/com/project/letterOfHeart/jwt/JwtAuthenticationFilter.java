@@ -20,9 +20,9 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
-    private final JwtTokenProvider jwtTokenProvider;
-    private Cookie cookie;
-     
+	private final JwtTokenProvider jwtTokenProvider;
+	private Cookie cookie;
+	 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
  
@@ -39,30 +39,31 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         System.out.println(" here ") ;
         System.out.println("쿠키값~~~ : " + token);
         try {
-            chain.doFilter(request, response);
+        	chain.doFilter(request, response);
         } catch (IllegalStateException e) {
-            System.out.println("test :" + e );
+        	System.out.println("test :" + e );
         }
         
     }
  
     // Request Header 에서 토큰 정보 추출
     private String resolveToken(HttpServletRequest request) {
-        String bearerToken = "";
-        
-        Cookie[] list = request.getCookies();
-        
-        for(Cookie cookie:list) {
-            if(cookie.getName().equals("Authorization")) {
-                bearerToken = cookie.getValue();
-                System.out.println("resolveToken 쿠키값~~~ : " + bearerToken);
-            }
-        }
-        
+    	String bearerToken = "";
+    	
+    	Cookie[] list = request.getCookies();
+    	
+    	if(list != null) {
+    		for(Cookie cookie:list) {
+    			if(cookie.getName().equals("Authorization")) {
+    				bearerToken = cookie.getValue();
+    				System.out.println("resolveToken 쿠키값~~~ : " + bearerToken);
+    			} 
+    		}
+    	}
+    	
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }
         return bearerToken;
     }
 }
-
