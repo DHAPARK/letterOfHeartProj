@@ -23,7 +23,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 	private final JwtTokenProvider jwtTokenProvider;
 	private Cookie cookie;
 	 
-    @Override
+	@Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
  
         // 1. Request Header 에서 JWT 토큰 추출
@@ -36,14 +36,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             System.out.println("in?");
         }
-        System.out.println(" here ") ;
-        System.out.println("쿠키값~~~ : " + token);
-        try {
-        	chain.doFilter(request, response);
-        } catch (IllegalStateException e) {
-        	System.out.println("test :" + e );
-        }
-        
+        	chain.doFilter(request, response);        
     }
  
     // Request Header 에서 토큰 정보 추출
@@ -56,12 +49,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     		for(Cookie cookie:list) {
     			if(cookie.getName().equals("Authorization")) {
     				bearerToken = cookie.getValue();
-    				System.out.println("resolveToken 쿠키값~~~ : " + bearerToken);
-    			} 
+    			}
     		}
-    	}
+    	}    	
     	
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
         return bearerToken;

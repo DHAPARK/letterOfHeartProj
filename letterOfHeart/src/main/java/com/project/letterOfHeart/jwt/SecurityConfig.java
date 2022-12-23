@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용 x
                 .and()
                 .authorizeRequests()
+//                .antMatchers("/").access("isAnonymous() == true ? ")
                 .antMatchers("/").permitAll()
                 .antMatchers("/**").permitAll()
 //                .antMatchers("/users/").hasRole("USER")
