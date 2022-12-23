@@ -6,6 +6,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
@@ -19,8 +20,9 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
-	private final JwtTokenProvider jwtTokenProvider;
-	 
+    private final JwtTokenProvider jwtTokenProvider;
+    private Cookie cookie;
+     
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
  
@@ -35,20 +37,32 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             System.out.println("in?");
         }
         System.out.println(" here ") ;
+        System.out.println("쿠키값~~~ : " + token);
         try {
-        	chain.doFilter(request, response);
+            chain.doFilter(request, response);
         } catch (IllegalStateException e) {
-        	System.out.println("test :" + e );
+            System.out.println("test :" + e );
         }
         
     }
  
     // Request Header 에서 토큰 정보 추출
     private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        String bearerToken = "";
+        
+        Cookie[] list = request.getCookies();
+        
+        for(Cookie cookie:list) {
+            if(cookie.getName().equals("Authorization")) {
+                bearerToken = cookie.getValue();
+                System.out.println("resolveToken 쿠키값~~~ : " + bearerToken);
+            }
+        }
+        
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }
-        return null;
+        return bearerToken;
     }
 }
+

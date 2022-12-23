@@ -1,4 +1,4 @@
-		package com.project.letterOfHeart.controller;
+package com.project.letterOfHeart.controller;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,7 +72,7 @@ public class UsersController {
 	@GetMapping("/users/login")
 	public ModelAndView loginForm(LoginForm loginForm, Model model) {
 		ModelAndView mv = new ModelAndView("myTree");
-		model.addAttribute("member", loginForm);
+		model.addAttribute("loginForm", loginForm);
 		return mv;
 	}
 
@@ -100,14 +101,21 @@ public class UsersController {
 			return new ModelAndView("/index");
 		}
 		
-		model.addAttribute("id", loginUsers.getId());
-		redirectAttributes.addAttribute("id", loginUsers.getId());
-		
-		model.addAttribute("messageForm",messageForm);
-		
-		loginToken(form, response);
 
-		System.out.println(loginToken(form, response));
+		redirectAttributes.addAttribute("id", loginUsers.getId());
+
+		loginToken(form, response);
+		
+		String refreshToken = loginToken(form, response).getRefreshToken();
+		String accessToken = loginToken(form, response).getAccessToken();
+		
+		// 토큰 쿠키에 저장
+    	Cookie cookie = new Cookie("Authorization", accessToken);
+    	cookie.setPath("/");
+    	cookie.setHttpOnly(true);
+    	cookie.setSecure(true);
+    	cookie.setMaxAge(20 * 60);
+    	response.addCookie(cookie);    	
 
 		return mv;
 	}
@@ -116,40 +124,33 @@ public class UsersController {
 
 		String accoutid = loginForm.getAccountId();
 		String password = loginForm.getPassword();
-		TokenInfo tokenInfo = usersTokenService.login(accoutid, password);
-
-		// refrech token 쿠키에 저장
-		cookie = ResponseCookie.from("refreshToken", tokenInfo.getRefreshToken()).maxAge(7 * 24 * 60 * 60).path("/")
-				.secure(true).sameSite("None").httpOnly(true).build();
-		response.setHeader("Set-Cookie", cookie.toString());
-
-		cookie = ResponseCookie.from("accessToken", tokenInfo.getAccessToken()).maxAge(20 * 60).path("/").secure(true)
-				.sameSite("None").httpOnly(true).build();
-		response.setHeader("Set-Cookie", cookie.toString());
-
-		System.out.println("memberLoginRequestDto : " + loginForm.toString());
-		System.out.println("쿠키 : " + cookie.toString());
-		System.out.println("access token:" + tokenInfo.getAccessToken());
-		System.out.println("refresh token:" + tokenInfo.getRefreshToken());
+		
+		Users loginUsers = usersService.login(loginForm.getAccountId(), loginForm.getPassword());
+		
+		TokenInfo tokenInfo = usersTokenService.login(accoutid, password);		
 
 		return tokenInfo;
 	}
 
 	@PostMapping("/users/logout")
 	public ModelAndView logout(HttpServletResponse response) {
+		// 쿠키 삭제
+    	Cookie cookie = new Cookie("Authorization", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        
 		ModelAndView mav = new ModelAndView("redirect:/");
-
-		cookie = ResponseCookie.from("accessToken", null).maxAge(0).path("/").secure(true).sameSite("None")
-				.httpOnly(true).build();
-		response.setHeader("Set-Cookie", cookie.toString());
-
 		return mav;
 	}
 
 	@GetMapping("/myTree/{id}")
 	   public ModelAndView getId(Model model, @PathVariable("id") long id,
 	                        // 페이징 처리
-	                        @PageableDefault(sort = "id", direction = Direction.ASC, size = 2)Pageable pageable) {
+	                        @PageableDefault(sort = "id", direction = Direction.ASC, size = 2)Pageable pageable,
+	                        @CookieValue("Authorization") String token) {
 	      ModelAndView mv = new ModelAndView("myTree");
 	      
 	      Users loginUsers = new Users();
@@ -174,6 +175,7 @@ public class UsersController {
 	      // 디자인트리
 	      model.addAttribute("treeDesign", tree.getTreeDesign());
 		  System.out.println("트리디자인 : " + tree.getTreeDesign() );
+		  
 	      return mv;
 	}
 
@@ -244,6 +246,7 @@ public class UsersController {
 		users.setAccountId(form.getAccountId());
 		users.setPassword(form.getPassword());
 		users.setNickname(form.getNickname());
+		users.setPhone(form.getPhone());
 		users.setCreateDate(LocalDateTime.now());
 		users.setRole("USER");
 
