@@ -81,5 +81,10 @@ public class UsersService {
 		System.out.println("검증실패===================ㄴ");
 		return users;
 	}
+
+	public Long findUserIdUserUrlrnd(String urlrnd) {
+		
+		return usersRepository.findUserIdUserUrlrnd( urlrnd );
+	}
 	
 }

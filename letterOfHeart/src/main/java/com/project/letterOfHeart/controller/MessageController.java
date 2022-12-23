@@ -45,7 +45,9 @@ public class MessageController {
 		Users user = userService.findOne(messageForm.getId());
 		// 트리 아이디 1건 조회
 		Tree tree = treeService.findOne(messageForm.getId());
-
+		
+		
+		
 		if (errors.hasErrors()) {
 			/*  실패시 입력 데이터 유지 */
 			model.addAttribute("messageForm", messageForm);
@@ -78,7 +80,8 @@ public class MessageController {
 		int messageCnt = messageService.findAllById(messageForm.getId());
 		treeService.updateTree(messageForm.getId(), messageCnt);
 		
-		return "redirect:/myTree/"+messageForm.getId();
+		//return "redirect:/myTree/"+messageForm.getId();
+		return "redirect:/myTree/"+user.getUrlrnd();
 	}
 
 }
