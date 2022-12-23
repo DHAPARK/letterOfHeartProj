@@ -1,4 +1,4 @@
-package com.project.letterOfHeart.controller;
+		package com.project.letterOfHeart.controller;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,20 +63,21 @@ public class UsersController {
 	private final JwtAuthenticationFilter filter;
 
 	@GetMapping("/")
-	public ModelAndView loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
+	public ModelAndView loginForm1(@ModelAttribute("loginForm") LoginForm loginForm,Model model,
 			@ModelAttribute("usersForm") UsersForm usersForm) {
 		ModelAndView mv = new ModelAndView("index");
+		model.addAttribute("loginForm", loginForm);
 		return mv;
-	}
-
+	}	
 	
+	/*
 	@GetMapping("/users/login")
 	public ModelAndView loginForm(LoginForm loginForm, Model model) {
 		ModelAndView mv = new ModelAndView("myTree");
 		model.addAttribute("loginForm", loginForm);
 		return mv;
 	}
-
+*/
 	
 	@PostMapping("/users/login")
 	public ModelAndView login(UsersForm usersForm, @Valid LoginForm form, Errors errors, Model model,
@@ -246,7 +248,6 @@ public class UsersController {
 		users.setAccountId(form.getAccountId());
 		users.setPassword(form.getPassword());
 		users.setNickname(form.getNickname());
-		users.setPhone(form.getPhone());
 		users.setCreateDate(LocalDateTime.now());
 		users.setRole("USER");
 
