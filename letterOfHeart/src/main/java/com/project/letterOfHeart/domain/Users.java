@@ -52,7 +52,7 @@ public class Users implements UserDetails{
     @Column(length = 8)
     private String nickname;            // 유저 닉네임
     private LocalDateTime createDate;   // 가입 일자
-    private String radomURL;			// 난수 URL
+    private String randomURL;			// 난수 URL
     
     @Column(unique = true)
     private String phone;
