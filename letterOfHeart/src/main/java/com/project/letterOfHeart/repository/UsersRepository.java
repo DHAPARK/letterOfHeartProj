@@ -56,5 +56,9 @@ public class UsersRepository {
 		
 		return null;
 	}
+
+	public Long findUserIdUserUrlrnd(String urlrnd) {
+		return em.createQuery("select u from Users u where u.urlrnd = :urlrnd",Users.class).setParameter("urlrnd", urlrnd).getSingleResult().getId() ;
+	}
 	
 }

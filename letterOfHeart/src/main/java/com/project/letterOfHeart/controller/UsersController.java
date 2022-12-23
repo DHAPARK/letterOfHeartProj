@@ -1,9 +1,10 @@
-		package com.project.letterOfHeart.controller;
+package com.project.letterOfHeart.controller;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -63,27 +64,24 @@ public class UsersController {
 	private final JwtAuthenticationFilter filter;
 
 	@GetMapping("/")
-	public ModelAndView loginForm1(@ModelAttribute("loginForm") LoginForm loginForm,Model model,
+	public ModelAndView loginForm1(@ModelAttribute("loginForm") LoginForm loginForm, Model model,
 			@ModelAttribute("usersForm") UsersForm usersForm) {
 		ModelAndView mv = new ModelAndView("index");
 		model.addAttribute("loginForm", loginForm);
 		return mv;
-	}	
-	
-	/*
-	@GetMapping("/users/login")
-	public ModelAndView loginForm(LoginForm loginForm, Model model) {
-		ModelAndView mv = new ModelAndView("myTree");
-		model.addAttribute("loginForm", loginForm);
-		return mv;
 	}
-*/
-	
+
+	/*
+	 * @GetMapping("/users/login") public ModelAndView loginForm(LoginForm
+	 * loginForm, Model model) { ModelAndView mv = new ModelAndView("myTree");
+	 * model.addAttribute("loginForm", loginForm); return mv; }
+	 */
+
 	@PostMapping("/users/login")
 	public ModelAndView login(UsersForm usersForm, @Valid LoginForm form, Errors errors, Model model,
 			RedirectAttributes redirectAttributes, HttpServletResponse response, MessageForm messageForm) {
 
-		ModelAndView mv = new ModelAndView("redirect:/myTree/{id}");
+		//ModelAndView mv = new ModelAndView("redirect:/myTree/{id}");
 
 		/* post요청시 넘어온 user 입력값에서 Validation에 걸리는 경우 */
 		if (errors.hasErrors()) {
@@ -95,41 +93,40 @@ public class UsersController {
 			model.addAttribute("loginMsg", "로그인 실패!!!!!!!!");
 			return new ModelAndView("/index");
 		}
-		
+
 		Users loginUsers = usersService.login(form.getAccountId(), form.getPassword());
-		if(loginUsers == null) {
+		if (loginUsers == null) {
 			// 로그인 실패
 			model.addAttribute("loginMsg", "로그인 실패!!!!!!!!");
 			return new ModelAndView("/index");
 		}
-		
 
-		redirectAttributes.addAttribute("id", loginUsers.getId());
+//		redirectAttributes.addAttribute("id", loginUsers.getId());
 
 		loginToken(form, response);
-		
+
 		String refreshToken = loginToken(form, response).getRefreshToken();
 		String accessToken = loginToken(form, response).getAccessToken();
-		
-		// 토큰 쿠키에 저장
-    	Cookie cookie = new Cookie("Authorization", accessToken);
-    	cookie.setPath("/");
-    	cookie.setHttpOnly(true);
-    	cookie.setSecure(true);
-    	cookie.setMaxAge(20 * 60);
-    	response.addCookie(cookie);    	
 
-		return mv;
+		// 토큰 쿠키에 저장
+		Cookie cookie = new Cookie("Authorization", accessToken);
+		cookie.setPath("/");
+		cookie.setHttpOnly(true);
+		cookie.setSecure(true);
+		cookie.setMaxAge(20 * 60);
+		response.addCookie(cookie);
+
+		return new ModelAndView("redirect:/myTree/"+  loginUsers.getUrlrnd() );
 	}
 
 	public TokenInfo loginToken(@RequestBody LoginForm loginForm, HttpServletResponse response) {
 
 		String accoutid = loginForm.getAccountId();
 		String password = loginForm.getPassword();
-		
+
 		Users loginUsers = usersService.login(loginForm.getAccountId(), loginForm.getPassword());
-		
-		TokenInfo tokenInfo = usersTokenService.login(accoutid, password);		
+
+		TokenInfo tokenInfo = usersTokenService.login(accoutid, password);
 
 		return tokenInfo;
 	}
@@ -137,48 +134,53 @@ public class UsersController {
 	@PostMapping("/users/logout")
 	public ModelAndView logout(HttpServletResponse response) {
 		// 쿠키 삭제
-    	Cookie cookie = new Cookie("Authorization", null);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-        
+		Cookie cookie = new Cookie("Authorization", null);
+		cookie.setHttpOnly(true);
+		cookie.setSecure(false);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+
 		ModelAndView mav = new ModelAndView("redirect:/");
 		return mav;
 	}
 
-	@GetMapping("/myTree/{id}")
-	   public ModelAndView getId(Model model, @PathVariable("id") long id,
-	                        // 페이징 처리
-	                        @PageableDefault(sort = "id", direction = Direction.ASC, size = 2)Pageable pageable,
-	                        @CookieValue("Authorization") String token) {
-	      ModelAndView mv = new ModelAndView("myTree");
-	      
-	      Users loginUsers = new Users();
-	      // 로그인 후 트리이미지 반환
-		  Tree tree = treeService.findOne(id);
-		  loginUsers.addTree(tree);
-		  
-	      model.addAttribute("userForm", new UsersForm());
-	      model.addAttribute("id", id);
-	      // 해당 id의 메세지 리스트
-	      model.addAttribute("messages", messageService.messageList(id));
-	      // 메세지 개수
-	      model.addAttribute("msgCnt", messageService.findAllById(id));
-	      // 페이징 처리
-	      model.addAttribute("pages", pageService.pageList(pageable,id));
-	      System.out.println("page : " + pageService.pageList(pageable,id));
-	      model.addAttribute("previous",pageable.previousOrFirst().getPageNumber());
-	      System.out.println("previous : "+ pageable.previousOrFirst().getPageNumber());
-	      model.addAttribute("next", pageable.next().getPageNumber());
-	      System.out.println("next : " + pageable.next().getPageNumber());
-	      
-	      // 디자인트리
-	      model.addAttribute("treeDesign", tree.getTreeDesign());
-		  System.out.println("트리디자인 : " + tree.getTreeDesign() );
-		  
-	      return mv;
+	@GetMapping("/myTree/{urlrnd}")
+	// public ModelAndView getId(Model model, @PathVariable("id") long id,
+	public ModelAndView getId(Model model, @PathVariable("urlrnd") String urlrnd,
+			@PageableDefault(sort = "id", direction = Direction.ASC, size = 2) Pageable pageable,
+			@CookieValue("Authorization") String token) {
+		
+		// urlrnd가지고 user테이블에서 id값을 뽑아내죠 ?
+
+		ModelAndView mv = new ModelAndView("myTree");
+		System.out.println( "오는게 맞나 ? : " + urlrnd );
+		Long id = usersService.findUserIdUserUrlrnd( urlrnd ) ;
+		
+		Users loginUsers = new Users();
+		// 로그인 후 트리이미지 반환
+		Tree tree = treeService.findOne(id);
+		loginUsers.addTree(tree);
+
+		model.addAttribute("userForm", new UsersForm());
+		model.addAttribute("id", id);
+		// 해당 id의 메세지 리스트
+		model.addAttribute("messages", messageService.messageList(id));
+		// 메세지 개수
+		model.addAttribute("msgCnt", messageService.findAllById(id));
+		// 페이징 처리
+		model.addAttribute("pages", pageService.pageList(pageable, id));
+		System.out.println("page : " + pageService.pageList(pageable, id));
+		model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+		System.out.println("previous : " + pageable.previousOrFirst().getPageNumber());
+		model.addAttribute("next", pageable.next().getPageNumber());
+		System.out.println("next : " + pageable.next().getPageNumber());
+
+		// 디자인트리
+		model.addAttribute("treeDesign", tree.getTreeDesign());
+		System.out.println("트리디자인 : " + tree.getTreeDesign());
+
+		return mv;
 	}
 
 	@GetMapping("/designTree")
@@ -190,7 +192,7 @@ public class UsersController {
 			filter.doFilter(request, response, chain);
 			System.out.println(" out? ");
 		} catch (IllegalStateException e) {
-			System.out.println(" ILLEGAL  " + e ) ;
+			System.out.println(" ILLEGAL  " + e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("IOE : " + e);
@@ -209,12 +211,21 @@ public class UsersController {
 
 	// 회원가입
 	@PostMapping("/users/new")
-	public ModelAndView create(LoginForm loginForm, @Valid UsersForm form,
-			Errors errors, Model model) {
+	public ModelAndView create(LoginForm loginForm, @Valid UsersForm form, Errors errors, Model model) {
 
 		ModelAndView mv = new ModelAndView("redirect:/");
-
-
+		// 난수 생성
+				int leftLimit = 48; // numeral '0'
+				int rightLimit = 122; // letter 'z'
+				int targetStringLength = 25;
+				Random random = new Random();
+				// 난수 값
+				String urlrnd = random.ints(leftLimit,rightLimit + 1)
+				  .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+				  .limit(targetStringLength)
+				  .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+				  .toString();
+		
 		if (errors.hasErrors()) {
 			/* 회원가입 실패시 입력 데이터 유지 */
 			model.addAttribute("usersForm", form);
@@ -228,25 +239,26 @@ public class UsersController {
 			}
 			model.addAttribute("msg", "회원가입 실패!!!!!!!!");
 			model.addAttribute("success", "400");
-			
+
 			return new ModelAndView("/index");
 		}
-		
+
 		// 회원가입 아이디 중복 체크
 		Users joinUsers = usersService.join(form.getAccountId());
-		if(joinUsers != null) {
+		if (joinUsers != null) {
 			// 실패
 			model.addAttribute("msgg", "아이디 중복, 회원가입 실패!!");
 			model.addAttribute("success", "400");
-			return new ModelAndView("/index") ;
+			return new ModelAndView("/index");
 		}
-		
+
 //		redirectAttributes.addAttribute("id", joinUsers.getId());
-		
+
 		// 정상 로직, service
 		Users users = new Users();
 		users.setAccountId(form.getAccountId());
 		users.setPassword(form.getPassword());
+		users.setUrlrnd(urlrnd);
 		users.setNickname(form.getNickname());
 		users.setCreateDate(LocalDateTime.now());
 		users.setRole("USER");
@@ -257,7 +269,7 @@ public class UsersController {
 		tree.setId(users.getId());
 		tree.setMessageCnt(0);
 		tree.setTreeDesign(1);
-		
+
 		// 회원가입
 		usersService.join(users);
 		// 트리 생성
