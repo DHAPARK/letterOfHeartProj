@@ -142,7 +142,7 @@ public class UsersController {
 	}
 
 	@GetMapping("/users/logout")
-	public ModelAndView logout(HttpServletResponse response) {
+	public ModelAndView logout(HttpServletRequest request ,HttpServletResponse response) {
 		// 쿠키 삭제
 		Cookie accessCookie = new Cookie("accessToken", null);
 		accessCookie.setHttpOnly(true);
@@ -164,6 +164,11 @@ public class UsersController {
 		jssesionCookie.setMaxAge(0);
 		jssesionCookie.setPath("/");
 		response.addCookie(jssesionCookie);
+		
+		Cookie[] ckList = request.getCookies();
+		
+		for ( Cookie ck : ckList )
+			ck.setMaxAge(0) ;
 
 
 		ModelAndView mav = new ModelAndView("redirect:/");
@@ -171,7 +176,7 @@ public class UsersController {
 	}
 
 	@PostMapping("/users/logout")
-	public ModelAndView logoutPost(HttpServletResponse response) {
+	public ModelAndView logoutPost(HttpServletRequest request , HttpServletResponse response) {
 		// 쿠키 삭제
 		Cookie accessCookie = new Cookie("accessToken", null);
 		accessCookie.setHttpOnly(true);
