@@ -169,7 +169,7 @@
             margin:0 auto;
             margin-bottom:20px;
         }
-        input[type="submit"] {
+        input[type="submit"], #registBtn {
             all: unset;
             width: 80%;
             background-color:green;
@@ -235,7 +235,7 @@
                     </div>
 
                    <div id="registForm">
-                        <form action="/users/new" th:object="${usersForm}" method="post">
+                        <form action="/users/new" th:object="${usersForm}" method="post" id="signUpForm">
                             <label for="accountId">
                                <input class="registFormEle" type="text" th:field="*{accountId}" name="accountId" placeholder="아이디"/>
                                <p class="error-msg" th:if="${valid_accountId}" th:text="${valid_accountId}"></p>
@@ -251,16 +251,13 @@
                             <label for="phone">
                             	<input class="registFormEle registFormElePhone" id="phone" name="phone" type="text" th:field="*{phone}" placeholder="(-)제외한 휴대폰번호" required>
 		                        <input id="numberck" type="button" value="전송">
-		                        <p class="error-msg" th:if="${valid_phone}" th:text="${valid_phone}"></p>
-		                    </label>
-		                    <label for="authnumber">
 		                        <input class="registFormEle registFormElePhone" id="authnumber" type="hidden" placeholder="인증번호를 입력해주세요." required>
 		                        <input id="smsck" type="hidden" value="인증">
+		                        <p class="error-msg" th:if="${valid_phone}" th:text="${valid_phone}"></p>
+		                        <p id="numbermsg"></p>
                             </label>
-                            <label>
-                            	<p id="numbermsg"></p>
-                            </label>
-                            <label><input type="submit" value="회원가입"/></label>
+                          
+                            <label><input type="button" onclick="regist()" id="registBtn" value="회원가입"/></label>
                         </form>
                     </div>
 

@@ -354,6 +354,7 @@ public class UsersController {
 		users.setPassword(form.getPassword());
 		users.setUrlrnd(urlrnd);
 		users.setNickname(form.getNickname());
+		users.setPhone(form.getPhone());
 		users.setCreateDate(LocalDateTime.now());
 		users.setRole("USER");
 

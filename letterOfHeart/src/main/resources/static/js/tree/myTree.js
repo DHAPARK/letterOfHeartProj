@@ -33,8 +33,8 @@ function send() {
 		return;
 	}
 	
-	if (form.content.value.length < 10 || form.content.value.length > 200) {
-		alert("편지 내용은 10자 이상, 200자 이하로 작성해주세요.");
+	if (form.content.value.length < 5 || form.content.value.length > 500) {
+		alert("편지 내용은 5자 이상, 500자 이하로 작성해주세요.");
 		form.content.focus();
 		return false;
 	} else {
