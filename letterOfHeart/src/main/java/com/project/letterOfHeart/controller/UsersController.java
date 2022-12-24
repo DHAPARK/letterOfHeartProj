@@ -334,7 +334,7 @@ public class UsersController {
 			model.addAttribute("msg", "회원가입 실패!!!!!!!!");
 			model.addAttribute("success", "400");
 
-			return new ModelAndView("redirect:/users/logout");
+			return new ModelAndView("/index");
 		}
 
 		// 회원가입 아이디 중복 체크
@@ -343,7 +343,7 @@ public class UsersController {
 			// 실패
 			model.addAttribute("msgg", "아이디 중복, 회원가입 실패!!");
 			model.addAttribute("success", "400");
-			return new ModelAndView("redirect:/users/logout");
+			return new ModelAndView("/index");
 		}
 
 //		redirectAttributes.addAttribute("id", joinUsers.getId());

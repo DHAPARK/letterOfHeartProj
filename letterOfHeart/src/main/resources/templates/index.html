@@ -292,6 +292,16 @@
             }
         })
         
+       // 회원가입, 로그인 중복
+       var Flag = false;
+        $(document).ready(function() {
+            let message1 = "[[${msgg}]]";
+            if (message1 != "") {
+                alert(message1);
+            }else {
+            }
+        })
+        
         function changeAuthStatus(){
             const loginForm = document.getElementById("loginForm");
             const registForm = document.getElementById("registForm");
