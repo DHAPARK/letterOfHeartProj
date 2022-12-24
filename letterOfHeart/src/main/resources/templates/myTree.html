@@ -365,7 +365,7 @@ html, body {
 		</table>
 
 		<div id="contents">
-			<div id="treeImg" th:style="|background-image: url(/resources/images/tree${treeDesign}.png)|">
+			<div id="treeImg" th:style="|background-image: url(/home/ec2-user/images/tree${treeDesign}.png)|">
 				<div id="top">
 					<div class="letters top" onclick="openLetter(this)">
 						<p style="color: white;">하fawdfawwafa</p>
@@ -437,7 +437,7 @@ html, body {
 
 			<div id="modalBtnDiv">
 				<button id="show">
-					<img src="/resources/images/santa-claus.png" />
+					<img src="/home/ec2-user/images/santa-claus.png" />
 				</button>
 			</div>
 			<!--실험-->
@@ -577,7 +577,7 @@ html, body {
 	        	var letterArrArr = letterArr[ i ].children ;
 	        	var boxArrArr = boxArr[ i ].children ;
 	        	
-	        	boxArrArr[ 1 ].src = `/resources/images/deco${ random( 1 , 13 ) }.png` ;
+	        	boxArrArr[ 1 ].src = `/home/ec2-user/images/deco${ random( 1 , 13 ) }.png` ;
 	        	for ( var k = 1 ; k <= 2 ; k++ ) {
 	        		boxArrArr[ 0 ].innerText = letterArrArr[ 0 ].innerText ;
 	        		boxArrArr[ k + 1 ].innerText = letterArrArr[ k - 1 ].innerText ;
