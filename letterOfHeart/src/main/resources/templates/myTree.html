@@ -370,8 +370,8 @@ html, body {
 					<div class="letters top" onclick="openLetter(this)">
 						<p style="color: white;">하fawdfawwafa</p>
 						<img class="lettersImg" onError="this.style.visibility='hidden'" />
-						<input type="hidden" id="title" /> <input type="hidden"
-							id="content" />
+						<input type="hidden" id="title" readonly/> <input type="hidden"
+							id="content" readonly/>
 					</div>
 					<!--letters top 끝-->
 				</div>
@@ -427,9 +427,9 @@ html, body {
 			<!-- letterArea 끝 -->
 			<div id="modalLetterPaper" style="display: none;">
 				<input type="text"
-					style="width: 90%; border: 3px dashed green; text-align: center; border-radius: 20px; margin-top: 10px auto;">
+					style="width: 90%; border: 3px dashed green; text-align: center; border-radius: 20px; margin-top: 10px auto;" readonly />
 				<textarea
-					style="width: 90%; border: 3px solid green; height: 80%; margin-top: 10px auto; border-radius: 20px;"></textarea>
+					style="width: 90%; border: 3px solid green; height: 80%; margin-top: 10px auto; border-radius: 20px;" readonly ></textarea>
 				<button onclick="closeModalLetterPaper(this)"
 					style="all: unset; width: 100%; color: white; background-color: red; font-weight: bold; font-size: 20px; text-align: center; border-radius: 10px;">닫기</button>
 			</div>

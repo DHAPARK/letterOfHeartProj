@@ -332,7 +332,7 @@ public class UsersController {
 				model.addAttribute(key, validateResult.get(key));
 			}
 			model.addAttribute("msg", "회원가입 실패!!!!!!!!");
-			model.addAttribute("success", "400");
+//			model.addAttribute("success", "400");
 
 			return new ModelAndView("/index");
 		}
@@ -342,7 +342,8 @@ public class UsersController {
 		if (joinUsers != null) {
 			// 실패
 			model.addAttribute("msgg", "아이디 중복, 회원가입 실패!!");
-			model.addAttribute("success", "400");
+//			model.addAttribute("success", "400");
+		
 			return new ModelAndView("/index");
 		}
 
