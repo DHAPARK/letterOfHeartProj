@@ -237,15 +237,15 @@
                    <div id="registForm">
                         <form action="/users/new" th:object="${usersForm}" method="post" id="signUpForm">
                             <label for="accountId">
-                               <input class="registFormEle" type="text" th:field="*{accountId}" name="accountId" placeholder="아이디"/>
+                               <input class="registFormEle" type="text" th:field="*{accountId}" name="accountId" id="accountId" placeholder="아이디"/>
                                <p class="error-msg" th:if="${valid_accountId}" th:text="${valid_accountId}"></p>
                             </label>
                             <label for="password">
-                               <input class="registFormEle" type="password" th:field="*{password}" name="password" placeholder="패스워드"/>
+                               <input class="registFormEle" type="password" th:field="*{password}" name="password" id="password" placeholder="패스워드"/>
                                <p class="error-msg" th:if="${valid_password}" th:text="${valid_password}"></p>
                             </label>
                             <label for="nickname">
-                               <input class="registFormEle" type="text" th:field="*{nickname}" name="nickname" placeholder="닉네임"/>
+                               <input class="registFormEle" type="text" th:field="*{nickname}" name="nickname" id="nickname" placeholder="닉네임"/>
                                <p class="error-msg" th:if="${valid_nickname}" th:text="${valid_nickname}"></p>
                             </label>
                             <label for="phone">
@@ -273,14 +273,19 @@
     <!-- container 끝 -->
     
     <script>
+    
+    	var accountId = document.getElementById("accountId");
+	 	var password = document.getElementById("password");
+	 	var nickname = document.getElementById("nickname");
+		var phone = document.getElementById("phone");
+	    var numberck = document.getElementById("numberck");
+	    var authnumber = document.getElementById("authnumber");
+	    var smsck = document.getElementById("smsck");
+	    var numbermsg = document.getElementById("numbermsg");
+	    var correctnumber = null;
+	    var form = document.getElementById("signUpForm");
+	    
 	    window.addEventListener("load", function(event){
-	   	 
-	    	var phone = document.getElementById("phone");
-	        var numberck = document.getElementById("numberck");
-	        var authnumber = document.getElementById("authnumber");
-	        var smsck = document.getElementById("smsck");
-	        var numbermsg = document.getElementById("numbermsg");
-	        var correctnumber = null;
 	        
 	    	numberck.addEventListener("click", function(){
 	            if(phone.value.trim().length<1){
@@ -333,11 +338,10 @@
 	    });
 	
 	    function regist() {
-	    	var form = document.getElementById("signUpForm");
-	    	
+	    		
 	    	if (confirm("핸드폰 번호를 검증하지 않으면 , 비밀번호 찾는데 이후에 문제가 생길 수 있습니다.")) {
 	            form.submit();
-	        } 
+	        }
 	    }
 	    
     </script>
